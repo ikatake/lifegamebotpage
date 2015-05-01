@@ -1,4 +1,4 @@
-var pathCgi = './enjoy.cgi';
+var pathCgi = './lgbplayer.cgi';
 var handleContent;
 var req, req2;
 var divNode;
