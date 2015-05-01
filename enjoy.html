@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <link rel="stylesheet" href="./lgb.css" type="text/css" />
+  <script src="./enjoy.js" type="text/javascript"></script>
+  <title>ENJOOOOY</title>
+</head>
+<body>
+<h1 id="ライフゲームbot">ライフゲームbot</h1>
+<div id="lgbplayer" align="center">
+<img id="stateimg" width="100px" height="100px" />
+<span>     </span>
+<svg id="svgObj" width="100px" height="100px" />
+<p>
+gene:<input type="text" id="gene">
+step:<input type="text" id="step">
+<input type="button" id="jump" value="jump" onclick="jump()">
+<br />
+<input type="button" id="prev" value="|<|<|" onclick="prev()">
+<input type="button" id="play" value="|>" onclick="play()">
+<input type="button" id="next_step" value="|>|" onclick="increase()">
+<input type="button" id="next_gene" value="|>|>|" onclick="next()">
+<input type="button" id="shuffle" value="shuffle off" onclick="shuffle()">
+<input type="button" id="repeat" value="repeat off" onclick="repeat()">
+</p>
+</div>
+</body>
+</html>
