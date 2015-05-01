@@ -13,9 +13,11 @@ function proc_onload() {
 	//通信用オブジェクト
 	req = new XMLHttpRequest();
 	//contentに紐付け。
+	/*
 	handleContent = document.getElementById('lgbplayer');
 	var div = document.createElement('div');
 	divNode = handleContent.appendChild(div);
+	*/
 	ancImg = document.getElementById('stateimg');
 	//サーバ側が準備出来たら、readData関数を呼ぶ。
 	req.onreadystatechange = readData;
@@ -152,13 +154,15 @@ function readData() {
 	if(req.readyState == 4) {
 		newest = JSON.parse(req.responseText);
 		console.log(newest);
-		//表示用文字列を生成	
+		//表示用文字列を生成
+		/*
 		var str = "gene:" + newest.gene + "  ";
 		str += "step:" + newest.step;
 		var div = document.createElement('div');
 		handleContent.removeChild(divNode);
 		divNode = handleContent.appendChild(div);
 		div.innerHTML = str;
+		*/
 		setValue('gene', newest.gene);
 		setValue('step', newest.step);
 		arlen = new Array();
