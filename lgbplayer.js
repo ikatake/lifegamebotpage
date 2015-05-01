@@ -189,6 +189,20 @@ function setImg(gene, step) {
 	ancImg.setAttribute("src", fname);
 	ancImg.setAttribute("alt", "g:" + gene + ", s:" + step);
 }
+function setGifs()
+{
+        var anc = document.getElementById('newgifs');
+        for(var ii = 1; ii <= 5; ii++)
+        {
+                var img = document.createElement('img');
+                var fname = "./gifs/";
+                var gene = newest.gene - ii;
+                fname += ("00000000" + gene).slice(-8) + ".gif";
+                img.setAttribute("src", fname);
+                img.setAttribute("alt", gene);
+                anc.appendChild(img);
+        }
+}
 /*
 	getValue : 指定したDOM要素の値を取得する
 	element : 取得するDOM要素のid
