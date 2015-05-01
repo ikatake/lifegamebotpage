@@ -167,6 +167,7 @@ function readData() {
 		setValue('step', newest.step);
 		arlen = new Array();
 		arlen[newest.gene] = newest.step;
+		setGifs();
 		proc_onload_measure();
 	}
 }
