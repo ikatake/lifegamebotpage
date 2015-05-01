@@ -10,9 +10,22 @@
 </head>
 <body>
 <h1 id="ライフゲームbot">ライフゲームbot</h1>
-<div id="lgbviewer">
-<div>現在の状態です。</div>
-<img id="lgbimg" widht="100px" height="100px" />
+<div id="lgbplayer" align="center">
+<img id="stateimg" width="100px" height="100px" />
+<div>life game bot player</div>
+<svg id="svgObj" width="100px" height="100px" />
+<p>
+gene:<input type="text" id="gene">
+step:<input type="text" id="step">
+<input type="button" id="jump" value="jump" onclick="jump()">
+<br />
+<input type="button" id="prev" value="|<|<|" onclick="prev()">
+<input type="button" id="play" value="|>" onclick="play()">
+<input type="button" id="next_step" value="|>|" onclick="increase()">
+<input type="button" id="next_gene" value="|>|>|" onclick="next()">
+<input type="button" id="shuffle" value="shuffle off" onclick="shuffle()">
+<input type="button" id="repeat" value="repeat off" onclick="repeat()">
+</p>
 </div>
 <h2 id="概要">概要</h2>
 <ul>
@@ -24,6 +37,7 @@
 <h2 id="ライフゲームとは">ライフゲームとは</h2>
 <ul>
 <li>詳しくは<a href="http://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0">wikipediaのページ</a>でも見てください。</li>
+<li>詳しくは<a href="http://dic.nicovideo.jp/id/27645">ニコニコ大百科にも記事</a>があります。</li>
 <li>セルオートマトン楽しいよ。</li>
 </ul>
 <h2 id="管理">管理</h2>
