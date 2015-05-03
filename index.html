@@ -1,28 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <link rel="stylesheet" href="./lgb.css" type="text/css" />
-  <script src="./lgbplayer.js" type="text/javascript"></script>
-  <title>ライフゲームBOT</title>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="lgb.css">
 </head>
 <body>
 <h1 id="ライフゲームbot">ライフゲームbot</h1>
 <div id="lgbplayer" align="center">
-life game bot player<br />
-<img id="stateimg" width="100px" height="100px" /><br />
-gene:<input type="text" id="gene">
-step:<input type="text" id="step">
-<input type="button" id="jump" value="jump" onclick="jump()">
-<br />
-<input type="button" id="prev" value="|<|<|" onclick="prev()">
-<input type="button" id="play" value="|>" onclick="play()">
-<input type="button" id="next_step" value="|>|" onclick="increase()">
-<input type="button" id="next_gene" value="|>|>|" onclick="next()">
-<input type="button" id="shuffle" value="shuffle off" onclick="shuffle()">
-<input type="button" id="repeat" value="repeat off" onclick="repeat()">
+life game bot player<br /> <img id="stateimg" width="100px" height="100px" /><br /> gene:<input type="text" id="gene"> step:<input type="text" id="step"> <input type="button" id="jump" value="jump" onclick="jump()"> <br /> <input type="button" id="prev" value="|&lt;|&lt;|" onclick="prev()"> <input type="button" id="play" value="|&gt;" onclick="play()"> <input type="button" id="next_step" value="|&gt;|" onclick="increase()"> <input type="button" id="next_gene" value="|&gt;|&gt;|" onclick="next()"> <input type="button" id="shuffle" value="shuffle off" onclick="shuffle()"> <input type="button" id="repeat" value="repeat off" onclick="repeat()">
 </div>
 <h2 id="概要">概要</h2>
 <ul>
@@ -34,12 +26,12 @@ step:<input type="text" id="step">
 <h2 id="ライフゲームとは">ライフゲームとは</h2>
 <ul>
 <li>詳しくは<a href="http://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0">wikipediaのページ</a>でも見てください。</li>
-<li>詳しくは<a href="http://dic.nicovideo.jp/id/27645">ニコニコ大百科にも記事</a>があります。</li>
+<li>また、<a href="http://dic.nicovideo.jp/id/27645">ニコニコ大百科にもページ</a>があります。</li>
 <li>セルオートマトン楽しいよ。</li>
 </ul>
 <h2 id="管理">管理</h2>
-<p>ライフゲームbotは<a href="http://ikatake.hateblo.jo">いかたけ</a>(<a href="https://twitter.com/ikatake/">@ikatake</a>)が作成し、<a href="http://wetsteam.org/">しめり蒸気</a>によって管理されています。</p>
-<h2 id="画像集">直近5世代のGIF動画</h2>
+<p>ライフゲームbotは<a href="http://ikatake.hateblo.jo">いかたけ</a>(<span class="citation" data-cites="ikatake">[@ikatake]</span>(https://twitter.com/ikatake/))が作成し、<a href="http://wetsteam.org/">しめり蒸気</a>によって管理されています。</p>
+<h2 id="直近5世代のgif動画">直近5世代のGIF動画</h2>
 <p id="newgifs"> </p>
 </body>
 </html>
