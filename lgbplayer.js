@@ -256,7 +256,7 @@ function isExist(gene, step) {
 }
 function setTweetButton(gene, step) {
 	var txHref = "https://twitter.com/intent/tweet?source=webclient&amp;";
-	var txStep = txHref + "text=LifeGameBot(_@lifegamebot)%0d%0a";
+	var txStep = txHref + "text=LifeGameBot(@_lifegamebot)%0d%0a";
 	var txGene = txStep;
 	var strAdd  = "http://www.wetsteam.org/lifegamebot/";
 	var strStep = ("00000000" + step).slice(-8);
