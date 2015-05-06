@@ -87,17 +87,26 @@ function prev() {
 function next() {
 	//
 	var gene = undefined;
+	var rtn;
 	if(shuffleState == true) {
-		gene = Math.floor(Math.random()*newest.gene) + 1;
+		while(1) {
+			gene = Math.floor(Math.random()*newest.gene) + 1;
+			if(-1 != jump2(gene, 0)) {
+				break;
+			}
+		}
 	} else if(obj.gene == newest.gene) {
 		if(repeatState == "all") {
-			gene = 1;
+			jump2(1, 0);
 		}
 	} else {
-		gene = obj.gene + 1;
-	}
-	if(gene != undefined) {
-		jump2(gene, 0);
+		gene = obj.gene;
+		while(1) {
+			gene++;
+			if(-1 != jump2(gene, 0)) {
+				break;
+			}
+		}
 	}
 }
 function shuffle() {
