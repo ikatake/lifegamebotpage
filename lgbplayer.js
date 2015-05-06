@@ -6,7 +6,8 @@ var obj, newest;
 var ancImg;
 var arlen;
 var pauseState, repeatState, shuffleState;
-var intvID; 
+var intvID;
+var elTwtStep, elTwtGene;
 
 //ページ読み込み時の処理を行う。
 function proc_onload() {
@@ -18,6 +19,8 @@ function proc_onload() {
 	var div = document.createElement('div');
 	divNode = handleContent.appendChild(div);
 	*/
+	elTwtStep = document.getElementById('tweet_step_pb');
+	elTwtGene = document.getElementById('tweet_gene_pb');
 	ancImg = document.getElementById('stateimg');
 	//サーバ側が準備出来たら、readData関数を呼ぶ。
 	req.onreadystatechange = readData;
@@ -39,7 +42,7 @@ function jump() {
 	var gene = parseInt(getValue('gene'));
 	var step = parseInt(getValue('step'));
 	if( jump2(gene, step) == -1){
-		alert("shit!");
+//		alert("shit!");
 	}
 }
 function jump2(gene, step) {
@@ -49,6 +52,7 @@ function jump2(gene, step) {
 	obj.gene = gene;
 	obj.step = step;
 	setImg(gene, step);
+	setTweetButton(gene, step);
 	setValue('gene', obj.gene);
 	setValue('step', obj.step);
 	return 0;
@@ -154,6 +158,8 @@ function readData() {
 	if(req.readyState == 4) {
 		newest = JSON.parse(req.responseText);
 		console.log(newest);
+		newest.gene = parseInt(newest.gene);
+		newest.step = parseInt(newest.step);
 		//表示用文字列を生成
 		/*
 		var str = "gene:" + newest.gene + "  ";
@@ -184,7 +190,7 @@ function readDataMeasure() {
 	}
 }
 function setImg(gene, step) {
-	var fname = "./stateLogs/";
+	var fname = "http://www.wetsteam.org/lifegamebot/stateLogs/";
 	fname += ("00000000" + gene).slice(-8) + "/"; 
 	fname += ("00000000" + step).slice(-8) + ".svg";
 	ancImg.setAttribute("src", fname);
@@ -196,7 +202,7 @@ function setGifs()
         for(var ii = 1; ii <= 5; ii++)
         {
                 var img = document.createElement('img');
-                var fname = "./gifs/";
+                var fname = "http://www.wetsteam.org/lifegamebot/gifs/";
                 var gene = newest.gene - ii;
                 fname += ("00000000" + gene).slice(-8) + ".gif";
                 img.setAttribute("src", fname);
@@ -247,6 +253,32 @@ function isExist(gene, step) {
 		return false;
 	}
 	return undefined;
+}
+function setTweetButton(gene, step) {
+	var txHref = "https://twitter.com/intent/tweet?source=webclient&amp;";
+	var txStep = txHref + "text=LifeGameBot(_@lifegamebot)%0d%0a";
+	var txGene = txStep;
+	var strAdd  = "http://www.wetsteam.org/lifegamebot/";
+	var strStep = ("00000000" + step).slice(-8);
+	var strGene = ("00000000" + gene).slice(-8);
+	txStep += "gene:" + gene + " step:" + step + "%0d%0a";
+	txGene += "gene:" + gene + "%0d%0a";
+	txStep += strAdd + "stateLogs/" + strGene + "/" + strStep + ".svg%0d%0a";
+	txGene += strAdd + "gifs/" + strGene + ".gif";
+	txStep = "window\.open\(\'" + txStep + "\'\)";
+	txGene = "window\.open\(\'" + txGene + "\'\)";
+	if(elTwtStep != undefined) {
+		elTwtStep.setAttribute('onclick', txStep);
+	}
+	if(elTwtGene != undefined) {
+		elTwtGene.setAttribute('onclick', txGene);
+		if(gene >= newest.gene) {
+			elTwtGene.setAttribute('disabled', "disabled");
+		} else {
+			elTwtGene.removeAttribute('disabled');
+
+		}
+	}
 }
 function State() {
 	this.gene = undefined;

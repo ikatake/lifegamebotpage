@@ -15,7 +15,20 @@
 <body>
 <h1 id="ライフゲームbot">ライフゲームbot</h1>
 <div id="lgbplayer" align="center">
-life game bot player<br /> <img id="stateimg" width="100px" height="100px" /><br /> gene:<input type="text" id="gene"> step:<input type="text" id="step"> <input type="button" id="jump" value="jump" onclick="jump()"> <br /> <input type="button" id="prev" value="|&lt;|&lt;|" onclick="prev()"> <input type="button" id="play" value="|&gt;" onclick="play()"> <input type="button" id="next_step" value="|&gt;|" onclick="increase()"> <input type="button" id="next_gene" value="|&gt;|&gt;|" onclick="next()"> <input type="button" id="shuffle" value="shuffle off" onclick="shuffle()"> <input type="button" id="repeat" value="repeat off" onclick="repeat()">
+life game bot player<br />
+<img id="stateimg" width="100px" height="100px" /><br />
+gene:<input type="text" id="gene">
+step:<input type="text" id="step">
+<input type="button" id="jump" value="jump" onclick="jump()"> <br />
+<input type="button" id="prev" value="|&lt;|&lt;|" onclick="prev()">
+<input type="button" id="play" value="|&gt;" onclick="play()">
+<input type="button" id="next_step" value="|&gt;|" onclick="increase()">
+<input type="button" id="next_gene" value="|&gt;|&gt;|" onclick="next()">
+<input type="button" id="shuffle" value="shuffle off" onclick="shuffle()">
+<input type="button" id="repeat" value="repeat off" onclick="repeat()">
+<br />
+<input type="button" value="tweet(step)" id="tweet_step_pb">
+<input type="button" value="tweet(gene)" id="tweet_gene_pb">
 </div>
 <h2 id="概要">概要</h2>
 <ul>
@@ -31,8 +44,23 @@ life game bot player<br /> <img id="stateimg" width="100px" height="100px" /><br
 <li>セルオートマトン楽しいよ。</li>
 </ul>
 <h2 id="管理">管理</h2>
-<p>ライフゲームbotは<a href="http://ikatake.hateblo.jo">いかたけ</a>(<span class="citation" data-cites="ikatake">[@ikatake]</span>(https://twitter.com/ikatake/))が作成し、<a href="http://wetsteam.org/">しめり蒸気</a>によって管理されています。</p>
+<ul>
+<li>ライフゲームbotは<a href="http://ikatake.hateblo.jp">いかたけ</a>(<a href="https://twitter.com/ikatake/">@ikatake</a>)が作成し、<a href="http://wetsteam.org/">しめり蒸気</a>によって管理されています。</li>
+<li>新機能などは<a href="http://ikatake.hateblo.jp/archive/category/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0bot">ブログ</a>で告知しています。</li>
+<li>このページのソースは<a href="https://github.com/ikatake/lifegamebotpage">github</a>に於いて保管しています。</li>
+</ul>
 <h2 id="直近5世代のgif動画">直近5世代のGIF動画</h2>
 <p id="newgifs"> </p>
+<script>
+!function(d,s,id){
+  var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+  if(!d.getElementById(id)){
+    js=d.createElement(s);
+    js.id=id;
+    js.src=p+'://platform.twitter.com/widgets.js';
+    fjs.parentNode.insertBefore(js,fjs);
+  }
+}(document, 'script', 'twitter-wjs');
+</script>
 </body>
 </html>

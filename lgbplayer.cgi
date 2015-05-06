@@ -29,7 +29,7 @@ sub reload {
 }
 sub jump {
 	my $state_str = "";
-	my $fname = "./stateLogs/";
+	my $fname = '/home/ikatake/www/wetsteam/lifegamebot/stateLogs/';
 	my $str = "";
 	my $step = 0;
 	my $gene = 0;
@@ -81,7 +81,8 @@ sub measure {
 	my $step = 0;
 	my $gene = 0;
 	my @arlen = ();
-	my $dname = "./stateLogs/";
+	my $bdname = '/home/ikatake/www/wetsteam/lifegamebot/stateLogs/';
+	my $dname = "";
 	my $str = "";
 	my @directory;
 	my %hash;
@@ -91,7 +92,7 @@ sub measure {
 	
 	for(my $ii = 1; $ii <= $gene; $ii++) {
 		my $len;
-		$dname = './stateLogs/' . sprintf("%08d",$ii) . '/';
+		$dname = $bdname . sprintf("%08d",$ii) . '/';
 		if(!(-e $dname)) { #file is not exist.
 			$len = -1;
 		}
