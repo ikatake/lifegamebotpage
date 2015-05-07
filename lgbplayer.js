@@ -79,7 +79,13 @@ function increase() {
 function prev() {
 	setPauseState(true);
 	if(obj.step == 0) {
-		jump2(obj.gene - 1, 0);
+		var gene = obj.gene;
+		while(1) {
+			gene--;
+			if(-1 != jump2(gene, 0)) {
+				break;
+			}
+		}
 	} else {
 		jump2(obj.gene, 0);
 	}
