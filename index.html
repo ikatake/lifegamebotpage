@@ -29,6 +29,7 @@ step:<input type="text" id="step">
 <br />
 <input type="button" value="tweet(step)" id="tweet_step_pb">
 <input type="button" value="tweet(gene)" id="tweet_gene_pb">
+<input type="button" value="wear(black)" id="wear_black_pb">
 </div>
 <h2 id="概要">概要</h2>
 <ul>
@@ -51,16 +52,8 @@ step:<input type="text" id="step">
 </ul>
 <h2 id="直近5世代のgif動画">直近5世代のGIF動画</h2>
 <p id="newgifs"> </p>
-<script>
-!function(d,s,id){
-  var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
-  if(!d.getElementById(id)){
-    js=d.createElement(s);
-    js.id=id;
-    js.src=p+'://platform.twitter.com/widgets.js';
-    fjs.parentNode.insertBefore(js,fjs);
-  }
-}(document, 'script', 'twitter-wjs');
-</script>
+<p id="wear">
+<svg id="suzuri_svg"></svg>
+</p>
 </body>
 </html>
