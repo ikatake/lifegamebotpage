@@ -131,6 +131,24 @@ function repeat() {
 		setRepeatState("one");
 	}
 }
+function wear_black_pb() {
+	var elSvg = getElementById('suzuri_svg');
+	var strSvg = ""; //innerHTMLに渡すsvgソース
+	var yBottomText;
+	var widthSvg, heightSvg;
+	const Y_TOP_TEXT = 10;
+	const SIZE_BOX = 10;
+	const WIDTH_LINE = 1;
+	const X_STATE = 0;
+	const X_TEXT = 0;
+	const Y_BUTTOM_TEXT
+	const MARGIN_TOP = 10
+	const MARGIN_BUTTOM = 10;
+	const SPACE_TOP = 10;
+	const SPACE_BUTTOM = 10;
+	
+	strSvg += '<svg '
+}
 function setPauseState(_pauseState) {
 	if(pauseState == _pauseState) {
 		return;
