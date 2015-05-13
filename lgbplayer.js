@@ -1,6 +1,6 @@
 var pathCgi = './lgbplayer.cgi';
 var handleContent;
-var req, req2;
+var req;
 var divNode;
 var obj, newest;
 var ancImg;
@@ -8,7 +8,7 @@ var arlen;
 var pauseState, repeatState, shuffleState;
 var intvID;
 var elTwtStep, elTwtGene;
-
+var shirtColor;
 //ページ読み込み時の処理を行う。
 function proc_onload() {
 	//通信用オブジェクト
@@ -36,6 +36,15 @@ function proc_onload_measure() {
 	req = new XMLHttpRequest();
 	req.onreadystatechange = readDataMeasure;
 	req.open("get", pathCgi+"?call=measure", true);
+	req.send("");
+}
+function wear_pb(color) {
+	shirtColor = color;
+	var gene = parseInt(getValue('gene'));
+	var step = parseInt(getValue('step'));
+	req = new XMLHttpRequest();
+	req.onreadystatechange = readDataWear;
+	req.open("get", pathCgi+"?call=jump&gene="+gene+"&step="+step, true);
 	req.send("");
 }
 function jump() {
@@ -131,23 +140,109 @@ function repeat() {
 		setRepeatState("one");
 	}
 }
-function wear_black_pb() {
-	var elSvg = getElementById('suzuri_svg');
-	var strSvg = ""; //innerHTMLに渡すsvgソース
-	var yBottomText;
-	var widthSvg, heightSvg;
-	const Y_TOP_TEXT = 10;
-	const SIZE_BOX = 10;
-	const WIDTH_LINE = 1;
+function makeWear(gene, step, state) {
+	var elSvg = document.getElementById('suzuri_svg');
+	var yBottomText, yCellTop;
+	var hTopText, hBottomText, wTopText, wBottomText;
+	var wArea, hArea;
+	var clBack = 'black';
+	var clFore = 'green';
+	var arState = new Array();
+	const SIZE_CELL = 10;
+	const W_LINE = 1;
 	const X_STATE = 0;
 	const X_TEXT = 0;
-	const Y_BUTTOM_TEXT
-	const MARGIN_TOP = 10
-	const MARGIN_BUTTOM = 10;
-	const SPACE_TOP = 10;
-	const SPACE_BUTTOM = 10;
-	
-	strSvg += '<svg '
+	const MARGIN_T = 10;
+	const MARGIN_B = 10;
+	const MARGIN_L = 10;
+	const MARGIN_R = 10;
+	const SPC_CELL = 2;
+	const SPC_T = 10;
+	const SPC_B = 10;
+	const NUM_CELLS = 10;
+	const NS = "http://www.w3.org/2000/svg";
+	//
+	setArrayState(arState, state);
+	//テキスト生成
+	var elBgRect = document.createElementNS(NS, 'rect');
+	var elTopText = document.createElementNS(NS, 'text');
+	var elBottomText = document.createElementNS(NS, 'text');
+	//appendChild
+	elSvg.appendChild(elBgRect);
+	elSvg.appendChild(elTopText);
+	elSvg.appendChild(elBottomText);
+	//
+	elTopText.setAttribute('font-family', 'Courier New, Courier');
+	elTopText.setAttribute('font-size', '16');
+	elTopText.setAttribute('fill', clFore);
+	elTopText.setAttribute('id', 'top_text');
+	elTopText.textContent = '@_lifegamebot';
+	wTopText = elTopText.getBBox().width;
+	hTopText = elTopText.getBBox().height;
+	elBottomText.setAttribute('font-family', 'Courier New, Courier');
+	elBottomText.setAttribute('font-size', '16');
+	elBottomText.setAttribute('fill', clFore);
+	elBottomText.setAttribute('id', 'bottom_text');
+	elBottomText.textContent = 'gene:' + gene + ' s:' + step;
+	wBottomText = elBottomText.getBBox().width;
+	hBottomText = elBottomText.getBBox().height;
+	yCellTop = MARGIN_T + hTopText + SPC_T;
+	yBottomText = yCellTop + (SPC_CELL + SIZE_CELL) * NUM_CELLS + SPC_B + hBottomText;
+	//SVGのサイズを計算
+	wArea = MARGIN_L + (SPC_CELL + SIZE_CELL) * NUM_CELLS + MARGIN_R;
+	if(wArea < (MARGIN_L + wTopText + MARGIN_R) ) {
+		wArea = MARGIN_L + wTopText + MARGIN_R;
+	}
+	if(wArea < (MARGIN_L + wBottomText + MARGIN_R) ) {
+		wArea = MARGIN_L + wBottomText + MARGIN_R;
+	}
+	hArea = yBottomText + MARGIN_B;
+	//BackGround
+	elBgRect.setAttribute('x', 0);
+	elBgRect.setAttribute('y', 0);
+	elBgRect.setAttribute('width', wArea);
+	elBgRect.setAttribute('height', hArea);
+	elBgRect.setAttribute('style', 'fill:' + clBack);
+	//テキストの位置を設定
+	elTopText.setAttribute('x', MARGIN_L);
+	elTopText.setAttribute('y', MARGIN_T + hTopText);
+	elBottomText.setAttribute('x', MARGIN_L);
+	elBottomText.setAttribute('y', yBottomText);
+	elSvg.setAttribute('width', wArea);
+	elSvg.setAttribute('height', hArea);
+	//Cells
+	for(var ii = 0; ii < NUM_CELLS; ii++) {
+		var y = yCellTop + ii * (SIZE_CELL + SPC_CELL);
+		for(var jj = 0; jj < NUM_CELLS; jj++) {
+			var elCellRect  = document.createElementNS(NS, 'rect');
+			var x = MARGIN_L + jj * (SIZE_CELL + SPC_CELL);
+			elCellRect.setAttribute('x', x);
+			elCellRect.setAttribute('y', y);
+			elCellRect.setAttribute('width', SIZE_CELL);
+			elCellRect.setAttribute('height', SIZE_CELL);
+			var style = "";
+			style = 'stroke:' + clFore + ';stroke-width:' + W_LINE;
+			if(arState[ii * NUM_CELLS + jj]) {
+				style += ';fill:' + clFore;
+			} else {
+				style += ';fill:' + clBack;
+			}
+			elCellRect.setAttribute('style', style);
+			elSvg.appendChild(elCellRect)
+		}
+	}
+	var elCanvas = document.getElementById('suzuri_canvas');
+	var svgData = new XMLSerializer().serializeToString(elSvg);
+	elCanvas.width = wArea;
+	elCanvas.height = hArea;
+	var ctx = elCanvas.getContext('2d');
+	imgsrc = 'data:image/svg+xml;charset=utf-8;base64,'
+		+ btoa(unescape(encodeURIComponent(svgData)));
+	var image = new Image();
+	image.src = imgsrc;
+	image.onload = function() {
+		ctx.drawImage(image, 0, 0);
+	}
 }
 function setPauseState(_pauseState) {
 	if(pauseState == _pauseState) {
@@ -220,6 +315,14 @@ function readDataMeasure() {
 			arlen[gene] = len;
 		}
 		jump2(parseInt(newest.gene), parseInt(newest.step));
+	}
+}
+function readDataWear() {
+	if(req.readyState == 4) {
+		var stateWear = JSON.parse(req.responseText);
+		var gene = parseInt(stateWear.gene);
+		var step = parseInt(stateWear.step);
+		makeWear(gene, step, stateWear.state);
 	}
 }
 function setImg(gene, step) {
@@ -319,4 +422,18 @@ function State() {
 }
 //ページ読み込み時にproc_onloadを起動。
 window.onload=proc_onload;
-
+function setArrayState(ar, str) {
+	var ii = 0;
+	var idx = 0;
+	while(str.charAt(ii) != '') {
+		if(str.charAt(ii) == '1') {
+			ar[idx] = true;
+			idx++;
+		}
+		else if(str.charAt(ii) == '0') {
+			ar[idx] = false;
+			idx++
+		}
+		ii++;
+	}
+}

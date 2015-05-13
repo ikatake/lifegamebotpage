@@ -29,7 +29,7 @@ step:<input type="text" id="step">
 <br />
 <input type="button" value="tweet(step)" id="tweet_step_pb">
 <input type="button" value="tweet(gene)" id="tweet_gene_pb">
-<input type="button" value="wear(black)" id="wear_black_pb">
+<input type="button" value="wear(black)" onclick="wear_pb('black')">
 </div>
 <h2 id="概要">概要</h2>
 <ul>
@@ -54,6 +54,7 @@ step:<input type="text" id="step">
 <p id="newgifs"> </p>
 <p id="wear">
 <svg id="suzuri_svg"></svg>
+<canvas id="suzuri_canvas"></canvas>
 </p>
 </body>
 </html>
