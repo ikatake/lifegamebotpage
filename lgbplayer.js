@@ -208,8 +208,8 @@ function makeWear(gene, step, state) {
 	elTopText.setAttribute('y', MARGIN_T + hTopText);
 	elBottomText.setAttribute('x', MARGIN_L);
 	elBottomText.setAttribute('y', yBottomText);
-	elSvg.setAttribute('width', wArea);
-	elSvg.setAttribute('height', hArea);
+	elSvg.setAttribute('width', wArea * 10);
+	elSvg.setAttribute('height', hArea * 10);
 	//Cells
 	for(var ii = 0; ii < NUM_CELLS; ii++) {
 		var y = yCellTop + ii * (SIZE_CELL + SPC_CELL);
@@ -231,10 +231,11 @@ function makeWear(gene, step, state) {
 			elSvg.appendChild(elCellRect)
 		}
 	}
+	elSvg.setAttribute('viewBox', '0 0 ' + wArea + ' ' + hArea);
 	var elCanvas = document.getElementById('suzuri_canvas');
 	var svgData = new XMLSerializer().serializeToString(elSvg);
-	elCanvas.width = wArea;
-	elCanvas.height = hArea;
+	elCanvas.width = wArea * 10;
+	elCanvas.height = hArea * 10;
 	var ctx = elCanvas.getContext('2d');
 	imgsrc = 'data:image/svg+xml;charset=utf-8;base64,'
 		+ btoa(unescape(encodeURIComponent(svgData)));
