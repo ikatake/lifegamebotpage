@@ -7,6 +7,7 @@
   <title>ライフゲームbot - しめり蒸気</title>
   <style type="text/css">code{white-space: pre;}</style>
   <script src="lgbplayer.js"></script>
+  <script src="key.js"></script>
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -29,7 +30,8 @@ step:<input type="text" id="step">
 <br />
 <input type="button" value="tweet(step)" id="tweet_step_pb">
 <input type="button" value="tweet(gene)" id="tweet_gene_pb">
-<input type="button" value="wear(black)" onclick="wear_pb('black')">
+<input type="button" value="wear(黒向け)" onclick="wear_pb('black')">
+<input type="button" value="wear(白向け)" onclick="wear_pb('white')">
 </div>
 <h2 id="概要">概要</h2>
 <ul>
@@ -53,8 +55,8 @@ step:<input type="text" id="step">
 <h2 id="直近5世代のgif動画">直近5世代のGIF動画</h2>
 <p id="newgifs"> </p>
 <p id="wear">
-<svg id="suzuri_svg"></svg>
-<canvas id="suzuri_canvas"></canvas>
+<svg id="suzuri_svg" width="0" height="0"></svg>
+<canvas id="suzuri_canvas" width="0" height="0"></canvas>
 </p>
 </body>
 </html>
