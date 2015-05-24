@@ -161,6 +161,9 @@ function makeWear(gene, step, state) {
 	const NUM_CELLS = 10;
 	const NS = "http://www.w3.org/2000/svg";
 	//
+	while(elSvg.firstChild) {
+		elSvg.removeChild(elSvg.firstChild);
+	}
 	setArrayState(arState, state);
 	if(shirtColor == 'black') {
 		var clFore = 'green';
@@ -255,20 +258,23 @@ function setXywhSvg(element, x, y, w, h) {
 	setPosSvg(element, x, y);
 	setSizeSvg(element, w, h);
 }
-function sendWear(gene, step){
+function sendWear(gene, step, color){
 	var elCanvas = document.getElementById('suzuri_canvas');
 	var xhr = new XMLHttpRequest();
 	xhr.responseType = 'json';
+	var itemId = 151;
+	if(shirtColor == 'black') {
+		itemId = 152;
+	}
 	var sendData = {
 		'title' : '@_lifegamebot g:' + gene + ' s:' + step,
 		'texture' : elCanvas.toDataURL('image/png'),
-//		'texture' : 'http://wetsteam.org/lifegamebot/enjoy/tstest.png',
 		'price' : 0,
 		'description' : '@_lifegamebot g:' + gene + ' s:' + step,
 		'products' : [ 
 		{
 			'itemId' : 1,
-			'exemplaryItemVariantId' :  151,
+			'exemplaryItemVariantId' :  itemId,
 			'published' : true,
 			'resizeMode' : 'contain'
 		} ] };
@@ -280,7 +286,7 @@ function sendWear(gene, step){
 		}
 		var url = xhr.response.products[0].sampleUrl;
 		if(url != null && url != "") {
-			var win = window.location.href = url;
+			window.location.href = url;
 		} else {
 			alert("なんか失敗したっぽい");
 			return 1;
