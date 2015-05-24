@@ -145,8 +145,7 @@ function makeWear(gene, step, state) {
 	var yBottomText, yCellTop;
 	var hTopText, hBottomText, wTopText, wBottomText;
 	var wArea, hArea;
-	var clBack = 'black';
-	var clFore = 'green';
+	var hCells;
 	var arState = new Array();
 	const SIZE_CELL = 10;
 	const W_LINE = 1;
@@ -157,12 +156,19 @@ function makeWear(gene, step, state) {
 	const MARGIN_L = 10;
 	const MARGIN_R = 10;
 	const SPC_CELL = 2;
-	const SPC_T = 10;
-	const SPC_B = 10;
+	const SPC_T = 2;
+	const SPC_B = 0;
 	const NUM_CELLS = 10;
 	const NS = "http://www.w3.org/2000/svg";
 	//
 	setArrayState(arState, state);
+	if(shirtColor == 'black') {
+		var clFore = 'green';
+	} else {
+		var clFore = 'black';
+	}
+	//雑にwidthとheightを決める。
+	setSizeSvg(elSvg, 200, 200);
 	//テキスト生成
 	var elBgRect = document.createElementNS(NS, 'rect');
 	var elTopText = document.createElementNS(NS, 'text');
@@ -171,23 +177,16 @@ function makeWear(gene, step, state) {
 	elSvg.appendChild(elBgRect);
 	elSvg.appendChild(elTopText);
 	elSvg.appendChild(elBottomText);
-	//
-	elTopText.setAttribute('font-family', 'Courier New, Courier');
-	elTopText.setAttribute('font-size', '16');
-	elTopText.setAttribute('fill', clFore);
-	elTopText.setAttribute('id', 'top_text');
-	elTopText.textContent = '@_lifegamebot';
+	//テキストの情報を設定
+	setTextElementSvg(elTopText, '@_lifegamebot', clFore);
 	wTopText = elTopText.getBBox().width;
 	hTopText = elTopText.getBBox().height;
-	elBottomText.setAttribute('font-family', 'Courier New, Courier');
-	elBottomText.setAttribute('font-size', '16');
-	elBottomText.setAttribute('fill', clFore);
-	elBottomText.setAttribute('id', 'bottom_text');
-	elBottomText.textContent = 'gene:' + gene + ' s:' + step;
+	setTextElementSvg(elBottomText, 'gene:' + gene + ' step:' + step, clFore);
 	wBottomText = elBottomText.getBBox().width;
 	hBottomText = elBottomText.getBBox().height;
 	yCellTop = MARGIN_T + hTopText + SPC_T;
-	yBottomText = yCellTop + (SPC_CELL + SIZE_CELL) * NUM_CELLS + SPC_B + hBottomText;
+	hCells = (SPC_CELL + SIZE_CELL) * NUM_CELLS - SPC_CELL;
+	yBottomText = yCellTop + hCells + SPC_B + hBottomText;
 	//SVGのサイズを計算
 	wArea = MARGIN_L + (SPC_CELL + SIZE_CELL) * NUM_CELLS + MARGIN_R;
 	if(wArea < (MARGIN_L + wTopText + MARGIN_R) ) {
@@ -198,40 +197,31 @@ function makeWear(gene, step, state) {
 	}
 	hArea = yBottomText + MARGIN_B;
 	//BackGround
-	elBgRect.setAttribute('x', 0);
-	elBgRect.setAttribute('y', 0);
-	elBgRect.setAttribute('width', wArea);
-	elBgRect.setAttribute('height', hArea);
-	elBgRect.setAttribute('style', 'fill:' + clBack);
+	setXywhSvg(elBgRect, 0, 0, wArea, hArea);
+	elBgRect.setAttribute('style', 'fill:rgba\(255,255,255,0.0\)');
 	//テキストの位置を設定
-	elTopText.setAttribute('x', MARGIN_L);
-	elTopText.setAttribute('y', MARGIN_T + hTopText);
-	elBottomText.setAttribute('x', MARGIN_L);
-	elBottomText.setAttribute('y', yBottomText);
-	elSvg.setAttribute('width', wArea * 10);
-	elSvg.setAttribute('height', hArea * 10);
+	setPosSvg(elTopText, MARGIN_L, MARGIN_T + (hTopText * 0.75) );
+	setPosSvg(elBottomText, MARGIN_L, yBottomText - hBottomText * 0.25);
 	//Cells
 	for(var ii = 0; ii < NUM_CELLS; ii++) {
 		var y = yCellTop + ii * (SIZE_CELL + SPC_CELL);
 		for(var jj = 0; jj < NUM_CELLS; jj++) {
 			var elCellRect  = document.createElementNS(NS, 'rect');
 			var x = MARGIN_L + jj * (SIZE_CELL + SPC_CELL);
-			elCellRect.setAttribute('x', x);
-			elCellRect.setAttribute('y', y);
-			elCellRect.setAttribute('width', SIZE_CELL);
-			elCellRect.setAttribute('height', SIZE_CELL);
+			setXywhSvg(elCellRect, x, y, SIZE_CELL, SIZE_CELL);
 			var style = "";
 			style = 'stroke:' + clFore + ';stroke-width:' + W_LINE;
 			if(arState[ii * NUM_CELLS + jj]) {
 				style += ';fill:' + clFore;
 			} else {
-				style += ';fill:' + clBack;
+				style += ';fill:rgba(255,255,255,0.0)';
 			}
 			elCellRect.setAttribute('style', style);
 			elSvg.appendChild(elCellRect)
 		}
 	}
-	elSvg.setAttribute('viewBox', '0 0 ' + wArea + ' ' + hArea);
+	setSizeSvg(elSvg, wArea * 10, hArea * 10);
+	elSvg.setAttribute('viewBox', '0 0 ' + wArea + ' ' + hArea );
 	var elCanvas = document.getElementById('suzuri_canvas');
 	var svgData = new XMLSerializer().serializeToString(elSvg);
 	elCanvas.width = wArea * 10;
@@ -243,8 +233,67 @@ function makeWear(gene, step, state) {
 	image.src = imgsrc;
 	image.onload = function() {
 		ctx.drawImage(image, 0, 0);
+		elSvg.setAttribute('style', 'display:none');
+		sendWear(gene, step);
 	}
 }
+function setTextElementSvg(elText, strTextContent, colorText) {
+	elText.setAttribute('font-family', 'Courier New, Courier');
+	elText.setAttribute('font-size', '16');
+	elText.setAttribute('fill', colorText);
+	elText.textContent = strTextContent;
+}
+function setPosSvg(element, x, y) {
+	element.setAttribute('x', x + 0);
+	element.setAttribute('y', y + 0);
+}
+function setSizeSvg(element, w, h) {
+	element.setAttribute('width', w + 0);
+	element.setAttribute('height', h + 0);
+}
+function setXywhSvg(element, x, y, w, h) {
+	setPosSvg(element, x, y);
+	setSizeSvg(element, w, h);
+}
+function sendWear(gene, step){
+	var elCanvas = document.getElementById('suzuri_canvas');
+	var xhr = new XMLHttpRequest();
+	xhr.responseType = 'json';
+	var sendData = {
+		'title' : '@_lifegamebot g:' + gene + ' s:' + step,
+		'texture' : elCanvas.toDataURL('image/png'),
+//		'texture' : 'http://wetsteam.org/lifegamebot/enjoy/tstest.png',
+		'price' : 0,
+		'description' : '@_lifegamebot g:' + gene + ' s:' + step,
+		'products' : [ 
+		{
+			'itemId' : 1,
+			'exemplaryItemVariantId' :  151,
+			'published' : true,
+			'resizeMode' : 'contain'
+		} ] };
+	xhr.onload = function() {
+		console.log(xhr);
+		if(xhr.status != 200) {
+			alert("なんか失敗したっぽい");
+			return 1;
+		}
+		var url = xhr.response.products[0].sampleUrl;
+		if(url != null && url != "") {
+			var win = window.location.href = url;
+		} else {
+			alert("なんか失敗したっぽい");
+			return 1;
+		}
+	};
+	xhr.open('POST', 'https://suzuri.jp/api/v1/materials', true);
+	xhr.setRequestHeader('Authorization', 'Bearer ' + suzuriApiKey);
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	console.log(sendData);
+	xhr.send(JSON.stringify(sendData));
+	elCanvas.setAttribute('hidden', 'hidden');
+}
+	
 function setPauseState(_pauseState) {
 	if(pauseState == _pauseState) {
 		return;
