@@ -143,7 +143,7 @@ function repeat() {
 function makeWear(gene, step, state) {
 	var elSvg = document.getElementById('suzuri_svg');
 	var yBottomText, yCellTop;
-	var hTopText, hBottomText, wTopText, wBottomText;
+	var wTopText, wBottomText1, wBottomText2;
 	var wArea, hArea;
 	var hCells;
 	var arState = new Array();
@@ -159,6 +159,10 @@ function makeWear(gene, step, state) {
 	const SPC_T = 2;
 	const SPC_B = 0;
 	const NUM_CELLS = 10;
+	const H_TOP_TEXT = 18;
+	const H_BTM_TEXT1 = 18;
+	const H_BTM_TEXT2 = 18;
+	const W_CHR_TEXT = 10;
 	const NS = "http://www.w3.org/2000/svg";
 	//
 	while(elSvg.firstChild) {
@@ -175,36 +179,36 @@ function makeWear(gene, step, state) {
 	//テキスト生成
 	var elBgRect = document.createElementNS(NS, 'rect');
 	var elTopText = document.createElementNS(NS, 'text');
-	var elBottomText = document.createElementNS(NS, 'text');
+	var elBottomText1 = document.createElementNS(NS, 'text');
+	var elBottomText2 = document.createElementNS(NS, 'text');
 	//appendChild
 	elSvg.appendChild(elBgRect);
 	elSvg.appendChild(elTopText);
-	elSvg.appendChild(elBottomText);
+	elSvg.appendChild(elBottomText1);
+	elSvg.appendChild(elBottomText2);
 	//テキストの情報を設定
 	setTextElementSvg(elTopText, '@_lifegamebot', clFore);
-	wTopText = elTopText.getBBox().width;
-	hTopText = elTopText.getBBox().height;
-	setTextElementSvg(elBottomText, 'gene:' + gene + ' step:' + step, clFore);
-	wBottomText = elBottomText.getBBox().width;
-	hBottomText = elBottomText.getBBox().height;
-	yCellTop = MARGIN_T + hTopText + SPC_T;
+	wTopText = W_CHR_TEXT * elTopText.textContent.length;
+	setTextElementSvg(elBottomText1, 'gene:' + gene, clFore);
+	setTextElementSvg(elBottomText2, 'step:' + step, clFore);
+	wBottomText1 = W_CHR_TEXT * elBottomText1.textContent.length;
+	wBottomText2 = W_CHR_TEXT * elBottomText2.textContent.length;
+	yCellTop = MARGIN_T + H_TOP_TEXT + SPC_T;
 	hCells = (SPC_CELL + SIZE_CELL) * NUM_CELLS - SPC_CELL;
-	yBottomText = yCellTop + hCells + SPC_B + hBottomText;
+	yBottomText1 = yCellTop + hCells + SPC_B + H_BTM_TEXT1;
+	yBottomText2 = yBottomText1 + H_BTM_TEXT2;
 	//SVGのサイズを計算
+	wText = max3(wTopText, wBottomText1, wBottomText2);
 	wArea = MARGIN_L + (SPC_CELL + SIZE_CELL) * NUM_CELLS + MARGIN_R;
-	if(wArea < (MARGIN_L + wTopText + MARGIN_R) ) {
-		wArea = MARGIN_L + wTopText + MARGIN_R;
-	}
-	if(wArea < (MARGIN_L + wBottomText + MARGIN_R) ) {
-		wArea = MARGIN_L + wBottomText + MARGIN_R;
-	}
-	hArea = yBottomText + MARGIN_B;
+	wArea = max3(0, wArea, MARGIN_L + wText + MARGIN_R);
+	hArea = yBottomText2 + MARGIN_B;
 	//BackGround
 	setXywhSvg(elBgRect, 0, 0, wArea, hArea);
 	elBgRect.setAttribute('style', 'fill:rgba\(255,255,255,0.0\)');
 	//テキストの位置を設定
-	setPosSvg(elTopText, MARGIN_L, MARGIN_T + (hTopText * 0.75) );
-	setPosSvg(elBottomText, MARGIN_L, yBottomText - hBottomText * 0.25);
+	setPosSvg(elTopText, MARGIN_L, MARGIN_T + H_TOP_TEXT * 0.75);
+	setPosSvg(elBottomText1, MARGIN_L, yBottomText1 - H_BTM_TEXT1 * 0.25);
+	setPosSvg(elBottomText2, MARGIN_L, yBottomText2 - H_BTM_TEXT2 * 0.25);
 	//Cells
 	for(var ii = 0; ii < NUM_CELLS; ii++) {
 		var y = yCellTop + ii * (SIZE_CELL + SPC_CELL);
@@ -258,10 +262,18 @@ function setXywhSvg(element, x, y, w, h) {
 	setPosSvg(element, x, y);
 	setSizeSvg(element, w, h);
 }
+function max3(x1, x2, x3) {
+	if( (x1 >= x2) && (x1 >= x2) ) {
+		return x1;
+	}
+	else if( (x2 >= x1) && (x2 >= x3) ) {
+		return x2;
+	}
+	return x3;
+}
 function sendWear(gene, step, color){
 	var elCanvas = document.getElementById('suzuri_canvas');
 	var xhr = new XMLHttpRequest();
-	xhr.responseType = 'json';
 	var itemId = 151;
 	if(shirtColor == 'black') {
 		itemId = 152;
@@ -286,15 +298,16 @@ function sendWear(gene, step, color){
 		}
 		var url = xhr.response.products[0].sampleUrl;
 		if(url != null && url != "") {
-			window.location.href = url;
+			window.open(url, 'suzuri');
 		} else {
 			alert("なんか失敗したっぽい");
 			return 1;
 		}
 	};
 	xhr.open('POST', 'https://suzuri.jp/api/v1/materials', true);
+	xhr.setRequestHeader("Content-Type", "application/json");
 	xhr.setRequestHeader('Authorization', 'Bearer ' + suzuriApiKey);
-	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.responseType = 'json';
 	console.log(sendData);
 	xhr.send(JSON.stringify(sendData));
 	elCanvas.setAttribute('hidden', 'hidden');
