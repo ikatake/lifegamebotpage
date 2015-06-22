@@ -1,13 +1,14 @@
 var pathCgi = './lgbplayer.cgi';
 var handleContent;
-var req, req2;
+var req;
 var divNode;
 var obj, newest;
 var ancImg;
 var arlen;
 var pauseState, repeatState, shuffleState;
-var intvID; 
-
+var intvID;
+var elTwtStep, elTwtGene;
+var shirtColor;
 //ページ読み込み時の処理を行う。
 function proc_onload() {
 	//通信用オブジェクト
@@ -18,6 +19,8 @@ function proc_onload() {
 	var div = document.createElement('div');
 	divNode = handleContent.appendChild(div);
 	*/
+	elTwtStep = document.getElementById('tweet_step_pb');
+	elTwtGene = document.getElementById('tweet_gene_pb');
 	ancImg = document.getElementById('stateimg');
 	//サーバ側が準備出来たら、readData関数を呼ぶ。
 	req.onreadystatechange = readData;
@@ -35,11 +38,20 @@ function proc_onload_measure() {
 	req.open("get", pathCgi+"?call=measure", true);
 	req.send("");
 }
+function wear_pb(color) {
+	shirtColor = color;
+	var gene = parseInt(getValue('gene'));
+	var step = parseInt(getValue('step'));
+	req = new XMLHttpRequest();
+	req.onreadystatechange = readDataWear;
+	req.open("get", pathCgi+"?call=jump&gene="+gene+"&step="+step, true);
+	req.send("");
+}
 function jump() {
 	var gene = parseInt(getValue('gene'));
 	var step = parseInt(getValue('step'));
 	if( jump2(gene, step) == -1){
-		alert("shit!");
+//		alert("shit!");
 	}
 }
 function jump2(gene, step) {
@@ -49,6 +61,7 @@ function jump2(gene, step) {
 	obj.gene = gene;
 	obj.step = step;
 	setImg(gene, step);
+	setTweetButton(gene, step);
 	setValue('gene', obj.gene);
 	setValue('step', obj.step);
 	return 0;
@@ -75,7 +88,13 @@ function increase() {
 function prev() {
 	setPauseState(true);
 	if(obj.step == 0) {
-		jump2(obj.gene - 1, 0);
+		var gene = obj.gene;
+		while(1) {
+			gene--;
+			if(-1 != jump2(gene, 0)) {
+				break;
+			}
+		}
 	} else {
 		jump2(obj.gene, 0);
 	}
@@ -83,17 +102,26 @@ function prev() {
 function next() {
 	//
 	var gene = undefined;
+	var rtn;
 	if(shuffleState == true) {
-		gene = Math.floor(Math.random()*newest.gene) + 1;
+		while(1) {
+			gene = Math.floor(Math.random()*newest.gene) + 1;
+			if(-1 != jump2(gene, 0)) {
+				break;
+			}
+		}
 	} else if(obj.gene == newest.gene) {
 		if(repeatState == "all") {
-			gene = 1;
+			jump2(1, 0);
 		}
 	} else {
-		gene = obj.gene + 1;
-	}
-	if(gene != undefined) {
-		jump2(gene, 0);
+		gene = obj.gene;
+		while(1) {
+			gene++;
+			if(-1 != jump2(gene, 0)) {
+				break;
+			}
+		}
 	}
 }
 function shuffle() {
@@ -112,6 +140,179 @@ function repeat() {
 		setRepeatState("one");
 	}
 }
+function makeWear(gene, step, state) {
+	var elSvg = document.getElementById('suzuri_svg');
+	var yBottomText, yCellTop;
+	var wTopText, wBottomText1, wBottomText2;
+	var wArea, hArea;
+	var hCells;
+	var arState = new Array();
+	const SIZE_CELL = 10;
+	const W_LINE = 1;
+	const X_STATE = 0;
+	const X_TEXT = 0;
+	const MARGIN_T = 10;
+	const MARGIN_B = 10;
+	const MARGIN_L = 10;
+	const MARGIN_R = 10;
+	const SPC_CELL = 2;
+	const SPC_T = 2;
+	const SPC_B = 0;
+	const NUM_CELLS = 10;
+	const H_TOP_TEXT = 18;
+	const H_BTM_TEXT1 = 18;
+	const H_BTM_TEXT2 = 18;
+	const W_CHR_TEXT = 10;
+	const NS = "http://www.w3.org/2000/svg";
+	//
+	while(elSvg.firstChild) {
+		elSvg.removeChild(elSvg.firstChild);
+	}
+	setArrayState(arState, state);
+	if(shirtColor == 'black') {
+		var clFore = 'green';
+	} else {
+		var clFore = 'black';
+	}
+	//雑にwidthとheightを決める。
+	setSizeSvg(elSvg, 200, 200);
+	//テキスト生成
+	var elBgRect = document.createElementNS(NS, 'rect');
+	var elTopText = document.createElementNS(NS, 'text');
+	var elBottomText1 = document.createElementNS(NS, 'text');
+	var elBottomText2 = document.createElementNS(NS, 'text');
+	//appendChild
+	elSvg.appendChild(elBgRect);
+	elSvg.appendChild(elTopText);
+	elSvg.appendChild(elBottomText1);
+	elSvg.appendChild(elBottomText2);
+	//テキストの情報を設定
+	setTextElementSvg(elTopText, '@_lifegamebot', clFore);
+	wTopText = W_CHR_TEXT * elTopText.textContent.length;
+	setTextElementSvg(elBottomText1, 'gene:' + gene, clFore);
+	setTextElementSvg(elBottomText2, 'step:' + step, clFore);
+	wBottomText1 = W_CHR_TEXT * elBottomText1.textContent.length;
+	wBottomText2 = W_CHR_TEXT * elBottomText2.textContent.length;
+	yCellTop = MARGIN_T + H_TOP_TEXT + SPC_T;
+	hCells = (SPC_CELL + SIZE_CELL) * NUM_CELLS - SPC_CELL;
+	yBottomText1 = yCellTop + hCells + SPC_B + H_BTM_TEXT1;
+	yBottomText2 = yBottomText1 + H_BTM_TEXT2;
+	//SVGのサイズを計算
+	wText = max3(wTopText, wBottomText1, wBottomText2);
+	wArea = MARGIN_L + (SPC_CELL + SIZE_CELL) * NUM_CELLS + MARGIN_R;
+	wArea = max3(0, wArea, MARGIN_L + wText + MARGIN_R);
+	hArea = yBottomText2 + MARGIN_B;
+	//BackGround
+	setXywhSvg(elBgRect, 0, 0, wArea, hArea);
+	elBgRect.setAttribute('style', 'fill:rgba\(255,255,255,0.0\)');
+	//テキストの位置を設定
+	setPosSvg(elTopText, MARGIN_L, MARGIN_T + H_TOP_TEXT * 0.75);
+	setPosSvg(elBottomText1, MARGIN_L, yBottomText1 - H_BTM_TEXT1 * 0.25);
+	setPosSvg(elBottomText2, MARGIN_L, yBottomText2 - H_BTM_TEXT2 * 0.25);
+	//Cells
+	for(var ii = 0; ii < NUM_CELLS; ii++) {
+		var y = yCellTop + ii * (SIZE_CELL + SPC_CELL);
+		for(var jj = 0; jj < NUM_CELLS; jj++) {
+			var elCellRect  = document.createElementNS(NS, 'rect');
+			var x = MARGIN_L + jj * (SIZE_CELL + SPC_CELL);
+			setXywhSvg(elCellRect, x, y, SIZE_CELL, SIZE_CELL);
+			var style = "";
+			style = 'stroke:' + clFore + ';stroke-width:' + W_LINE;
+			if(arState[ii * NUM_CELLS + jj]) {
+				style += ';fill:' + clFore;
+			} else {
+				style += ';fill:rgba(255,255,255,0.0)';
+			}
+			elCellRect.setAttribute('style', style);
+			elSvg.appendChild(elCellRect)
+		}
+	}
+	setSizeSvg(elSvg, wArea * 10, hArea * 10);
+	elSvg.setAttribute('viewBox', '0 0 ' + wArea + ' ' + hArea );
+	var elCanvas = document.getElementById('suzuri_canvas');
+	var svgData = new XMLSerializer().serializeToString(elSvg);
+	elCanvas.width = wArea * 10;
+	elCanvas.height = hArea * 10;
+	var ctx = elCanvas.getContext('2d');
+	imgsrc = 'data:image/svg+xml;charset=utf-8;base64,'
+		+ btoa(unescape(encodeURIComponent(svgData)));
+	var image = new Image();
+	image.src = imgsrc;
+	image.onload = function() {
+		ctx.drawImage(image, 0, 0);
+		elSvg.setAttribute('style', 'display:none');
+		sendWear(gene, step);
+	}
+}
+function setTextElementSvg(elText, strTextContent, colorText) {
+	elText.setAttribute('font-family', 'Courier New, Courier');
+	elText.setAttribute('font-size', '16');
+	elText.setAttribute('fill', colorText);
+	elText.textContent = strTextContent;
+}
+function setPosSvg(element, x, y) {
+	element.setAttribute('x', x + 0);
+	element.setAttribute('y', y + 0);
+}
+function setSizeSvg(element, w, h) {
+	element.setAttribute('width', w + 0);
+	element.setAttribute('height', h + 0);
+}
+function setXywhSvg(element, x, y, w, h) {
+	setPosSvg(element, x, y);
+	setSizeSvg(element, w, h);
+}
+function max3(x1, x2, x3) {
+	if( (x1 >= x2) && (x1 >= x2) ) {
+		return x1;
+	}
+	else if( (x2 >= x1) && (x2 >= x3) ) {
+		return x2;
+	}
+	return x3;
+}
+function sendWear(gene, step, color){
+	var elCanvas = document.getElementById('suzuri_canvas');
+	var xhr = new XMLHttpRequest();
+	var itemId = 151;
+	if(shirtColor == 'black') {
+		itemId = 152;
+	}
+	var sendData = {
+		'title' : '@_lifegamebot g:' + gene + ' s:' + step,
+		'texture' : elCanvas.toDataURL('image/png'),
+		'price' : 0,
+		'description' : '@_lifegamebot g:' + gene + ' s:' + step,
+		'products' : [ 
+		{
+			'itemId' : 1,
+			'exemplaryItemVariantId' :  itemId,
+			'published' : true,
+			'resizeMode' : 'contain'
+		} ] };
+	xhr.onload = function() {
+		console.log(xhr);
+		if(xhr.status != 200) {
+			alert("なんか失敗したっぽい");
+			return 1;
+		}
+		var url = xhr.response.products[0].sampleUrl;
+		if(url != null && url != "") {
+			window.open(url, 'suzuri');
+		} else {
+			alert("なんか失敗したっぽい");
+			return 1;
+		}
+	};
+	xhr.open('POST', 'https://suzuri.jp/api/v1/materials', true);
+	xhr.setRequestHeader("Content-Type", "application/json");
+	xhr.setRequestHeader('Authorization', 'Bearer ' + suzuriApiKey);
+	xhr.responseType = 'json';
+	console.log(sendData);
+	xhr.send(JSON.stringify(sendData));
+	elCanvas.setAttribute('hidden', 'hidden');
+}
+	
 function setPauseState(_pauseState) {
 	if(pauseState == _pauseState) {
 		return;
@@ -154,6 +355,8 @@ function readData() {
 	if(req.readyState == 4) {
 		newest = JSON.parse(req.responseText);
 		console.log(newest);
+		newest.gene = parseInt(newest.gene);
+		newest.step = parseInt(newest.step);
 		//表示用文字列を生成
 		/*
 		var str = "gene:" + newest.gene + "  ";
@@ -183,8 +386,16 @@ function readDataMeasure() {
 		jump2(parseInt(newest.gene), parseInt(newest.step));
 	}
 }
+function readDataWear() {
+	if(req.readyState == 4) {
+		var stateWear = JSON.parse(req.responseText);
+		var gene = parseInt(stateWear.gene);
+		var step = parseInt(stateWear.step);
+		makeWear(gene, step, stateWear.state);
+	}
+}
 function setImg(gene, step) {
-	var fname = "./stateLogs/";
+	var fname = "http://www.wetsteam.org/lifegamebot/stateLogs/";
 	fname += ("00000000" + gene).slice(-8) + "/"; 
 	fname += ("00000000" + step).slice(-8) + ".svg";
 	ancImg.setAttribute("src", fname);
@@ -196,7 +407,7 @@ function setGifs()
         for(var ii = 1; ii <= 5; ii++)
         {
                 var img = document.createElement('img');
-                var fname = "./gifs/";
+                var fname = "http://www.wetsteam.org/lifegamebot/gifs/";
                 var gene = newest.gene - ii;
                 fname += ("00000000" + gene).slice(-8) + ".gif";
                 img.setAttribute("src", fname);
@@ -248,10 +459,50 @@ function isExist(gene, step) {
 	}
 	return undefined;
 }
+function setTweetButton(gene, step) {
+	var txHref = "https://twitter.com/intent/tweet?source=webclient&amp;";
+	var txStep = txHref + "text=LifeGameBot(@_lifegamebot)%0d%0a";
+	var txGene = txStep;
+	var strAdd  = "http://www.wetsteam.org/lifegamebot/";
+	var strStep = ("00000000" + step).slice(-8);
+	var strGene = ("00000000" + gene).slice(-8);
+	txStep += "gene:" + gene + " step:" + step + "%0d%0a";
+	txGene += "gene:" + gene + "%0d%0a";
+	txStep += strAdd + "stateLogs/" + strGene + "/" + strStep + ".svg%0d%0a";
+	txGene += strAdd + "gifs/" + strGene + ".gif";
+	txStep = "window\.open\(\'" + txStep + "\'\)";
+	txGene = "window\.open\(\'" + txGene + "\'\)";
+	if(elTwtStep != undefined) {
+		elTwtStep.setAttribute('onclick', txStep);
+	}
+	if(elTwtGene != undefined) {
+		elTwtGene.setAttribute('onclick', txGene);
+		if(gene >= newest.gene) {
+			elTwtGene.setAttribute('disabled', "disabled");
+		} else {
+			elTwtGene.removeAttribute('disabled');
+
+		}
+	}
+}
 function State() {
 	this.gene = undefined;
 	this.step = undefined;
 }
 //ページ読み込み時にproc_onloadを起動。
 window.onload=proc_onload;
-
+function setArrayState(ar, str) {
+	var ii = 0;
+	var idx = 0;
+	while(str.charAt(ii) != '') {
+		if(str.charAt(ii) == '1') {
+			ar[idx] = true;
+			idx++;
+		}
+		else if(str.charAt(ii) == '0') {
+			ar[idx] = false;
+			idx++
+		}
+		ii++;
+	}
+}

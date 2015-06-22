@@ -1,13 +1,18 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <link rel="stylesheet" href="./lgb.css" type="text/css" />
-  <link rel="stylesheet" href="./lgbplayer.css" type="text/css" />
-  <script src="./lgbplayer.js" type="text/javascript"></script>
-  <title>ライフゲームBOT</title>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>ライフゲームbot - しめり蒸気</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script src="lgbplayer.js"></script>
+  <script src="key.js"></script>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="lgb.css">
+  <link rel="stylesheet" href="lgbplayer.css">
 </head>
 <body>
 <h1 id="ライフゲームbot">ライフゲームbot</h1>
@@ -49,6 +54,10 @@
 		<input type="button" id="next_gene" value="|>|>|" onclick="next()">
 		<input type="button" id="shuffle" value="shuffle off" onclick="shuffle()">
 		<input type="button" id="repeat" value="repeat off" onclick="repeat()">
+		<input type="button" value="tweet(step)" id="tweet_step_pb">
+		<input type="button" value="tweet(gene)" id="tweet_gene_pb">
+		<input type="button" value="wear(黒向け)" onclick="wear_pb('black')">
+		<input type="button" value="wear(白向け)" onclick="wear_pb('white')">
 		-->
 	</div>
 </div>
@@ -62,13 +71,21 @@
 <h2 id="ライフゲームとは">ライフゲームとは</h2>
 <ul>
 <li>詳しくは<a href="http://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0">wikipediaのページ</a>でも見てください。</li>
-<li>詳しくは<a href="http://dic.nicovideo.jp/id/27645">ニコニコ大百科にも記事</a>があります。</li>
+<li>また、<a href="http://dic.nicovideo.jp/id/27645">ニコニコ大百科にもページ</a>があります。</li>
 <li>セルオートマトン楽しいよ。</li>
 </ul>
 <h2 id="管理">管理</h2>
-<p>ライフゲームbotは<a href="http://ikatake.hateblo.jo">いかたけ</a>(<a href="https://twitter.com/ikatake/">@ikatake</a>)が作成し、<a href="http://wetsteam.org/">しめり蒸気</a>によって管理されています。</p>
-<h2 id="画像集">直近5世代のGIF動画</h2>
+<ul>
+<li>ライフゲームbotは<a href="http://ikatake.hateblo.jp">いかたけ</a>(<a href="https://twitter.com/ikatake/">@ikatake</a>)が作成し、<a href="http://wetsteam.org/">しめり蒸気</a>によって管理されています。</li>
+<li>新機能などは<a href="http://ikatake.hateblo.jp/archive/category/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0bot">ブログ</a>で告知しています。</li>
+<li>このページのソースは<a href="https://github.com/ikatake/lifegamebotpage">github</a>に於いて保管しています。</li>
+</ul>
+<h2 id="直近5世代のgif動画">直近5世代のGIF動画</h2>
 <p id="newgifs"> </p>
+<p id="wear">
+<svg id="suzuri_svg" width="0" height="0"></svg>
+<canvas id="suzuri_canvas" width="0" height="0"></canvas>
+</p>
 <div id="backtoindex"><a href="www.wetsteam.org">しめり蒸気へ戻る</a></div>
 </body>
 </html>
