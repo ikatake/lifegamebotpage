@@ -57,8 +57,13 @@ li
 
 p
 {
-	padding-left: 40px;
-	padding-right: 40px;
+	padding-left: 50px;
+	/*padding-right: 40px;*/
+}
+
+p#wear
+{
+	display:none;
 }
 
 h2#画像集 + p, p + p
