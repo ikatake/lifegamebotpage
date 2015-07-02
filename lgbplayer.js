@@ -328,7 +328,7 @@ function setPauseState(_pauseState) {
 	if(pauseState == true) {
 		clearInterval(intvID);
 		elPlayButton.style.backgroundColor = "#FFFFFF";
-		elPlayBottonImage.setAttribute("title", "停止中");
+		elPlayButtonImage.setAttribute("title", "停止中");
 	} else {
 		intvID = setInterval(function() { increase(); }, 500);
 		elPlayButton.style.backgroundColor = "#2E8B57";
@@ -421,6 +421,7 @@ function setImg(gene, step) {
 function setGifs()
 {
 	var anc = document.getElementById('newgifs');
+	var gifimgs = anc.children.
 	for(var ii = 1; ii <= 5 && newest.gene - ii > 0; ii++)
 	{
 		//var img = document.createElement('img');
@@ -429,9 +430,9 @@ function setGifs()
 		fname += ("00000000" + gene).slice(-8) + ".gif";
 		//img.setAttribute("src", fname);
 		//img.setAttribute("alt", gene);
-		anc.childNodes[ii-1].setAttribute("src", fname);
-		anc.childNodes[ii-1].setAttribute("alt", gene);
-		anc.childNodes[ii-1].setAttribute("title", gene);
+		gifimgs[ii-1].setAttribute("src", fname);
+		gifimgs[ii-1].setAttribute("alt", gene);
+		gifimgs[ii-1].setAttribute("title", gene);
 		//anc.appendChild(img);
 	}
 }
