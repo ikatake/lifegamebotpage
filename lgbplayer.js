@@ -7,7 +7,8 @@ var ancImg;
 var arlen;
 var pauseState, repeatState, shuffleState;
 var intvID;
-var elTwtStep, elTwtGene, elPlayButton, elRepeatButton, elShuffleButton, elRepeatButtonImage;
+var elTwtStep, elTwtGene, elPlayButton, elRepeatButton, elShuffleButton;
+var elPlayButtonImage, elShuffleButtonImage, elRepeatButtonImage;
 var shirtColor;
 //ページ読み込み時の処理を行う。
 function proc_onload() {
@@ -25,6 +26,8 @@ function proc_onload() {
 	elPlayButton = document.getElementById('play');
 	elRepeatButton = document.getElementById('repeat');
 	elShuffleButton = document.getElementById('shuffle');
+	elPlayButtonImage = elPlayButton.firstChild;
+	elShuffleButtonImage = elShuffleButton.firstChild
 	elRepeatButtonImage = elRepeatButton.firstChild;
 	//サーバ側が準備出来たら、readData関数を呼ぶ。
 	req.onreadystatechange = readData;
@@ -326,10 +329,12 @@ function setPauseState(_pauseState) {
 		clearInterval(intvID);
 		//setValue("play", "|>");
 		elPlayButton.style.backgroundColor = "#FFFFFF";
+		elPlayBottonImage.setAttribute("title", "停止中");
 	} else {
 		intvID = setInterval(function() { increase(); }, 500);
 		//setValue("play", "||");
 		elPlayButton.style.backgroundColor = "#2E8B57";
+		elPlayBottonImage.setAttribute("title", "再生中");
 	}
 }
 function setShuffleState(_shuffleState) {
@@ -340,9 +345,11 @@ function setShuffleState(_shuffleState) {
 	if(shuffleState == true) {
 		//setValue("shuffle", "shuffle on");
 		elShuffleButton.style.backgroundColor = "#2E8B57";
+		elShuffleButtonImage.setAttribute("title", "シャッフル　オン");
 	} else {
 		//setValue("shuffle", "shuffle off");
 		elShuffleButton.style.backgroundColor = "#FFFFFF";
+		elShuffleButtonImage.setAttribute("title", "シャッフル　オフ");
 	}
 }
 function setRepeatState(_repeatState) {
@@ -354,14 +361,17 @@ function setRepeatState(_repeatState) {
 		//setValue("repeat", "repeat all");
 		elRepeatButton.style.backgroundColor = "#2E8B57";
 		elRepeatButtonImage.setAttribute("src", "./lgbpimg/repeatAll.png");
+		elRepeatButtonImage.setAttribute("title", "リピート(全て)");
 	} else if(repeatState == "one") {
 		//setValue("repeat", "repeat one");
 		elRepeatButton.style.backgroundColor = "#2E8B57";
 		elRepeatButtonImage.setAttribute("src", "./lgbpimg/repeat1.png");
+		elRepeatButtonImage.setAttribute("title", "リピート(世代)");
 	} else {
 		//setValue("repeat", "repeat off");
 		elRepeatButton.style.backgroundColor = "#FFFFFF";
 		elRepeatButtonImage.setAttribute("src", "./lgbpimg/repeat.png");
+		elRepeatButtonImage.setAttribute("title", "リピート　オフ");
 	}
 }
 //受信用関数
