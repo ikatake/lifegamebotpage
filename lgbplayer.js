@@ -420,17 +420,20 @@ function setImg(gene, step) {
 }
 function setGifs()
 {
-        var anc = document.getElementById('newgifs');
-        for(var ii = 1; ii <= 5; ii++)
-        {
-                var img = document.createElement('img');
-                var fname = "http://www.wetsteam.org/lifegamebot/gifs/";
-                var gene = newest.gene - ii;
-                fname += ("00000000" + gene).slice(-8) + ".gif";
-                img.setAttribute("src", fname);
-                img.setAttribute("alt", gene);
-                anc.appendChild(img);
-        }
+	var anc = document.getElementById('newgifs');
+	for(var ii = 1; ii <= 5 && newest.gene - ii > 0; ii++)
+	{
+		//var img = document.createElement('img');
+		var fname = "http://www.wetsteam.org/lifegamebot/gifs/";
+		var gene = newest.gene - ii;
+		fname += ("00000000" + gene).slice(-8) + ".gif";
+		//img.setAttribute("src", fname);
+		//img.setAttribute("alt", gene);
+		anc.childNodes[ii-1].setAttribute("src", fname);
+		anc.childNodes[ii-1].setAttribute("alt", gene);
+		anc.childNodes[ii-1].setAttribute("title", gene);
+		//anc.appendChild(img);
+	}
 }
 /*
 	getValue : 指定したDOM要素の値を取得する
