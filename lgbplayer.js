@@ -7,7 +7,8 @@ var ancImg;
 var arlen;
 var pauseState, repeatState, shuffleState;
 var intvID;
-var elTwtStep, elTwtGene;
+var elTwtStep, elTwtGene, elPlayButton, elRepeatButton, elShuffleButton;
+var elPlayButtonImage, elShuffleButtonImage, elRepeatButtonImage;
 var shirtColor;
 //ページ読み込み時の処理を行う。
 function proc_onload() {
@@ -22,6 +23,12 @@ function proc_onload() {
 	elTwtStep = document.getElementById('tweet_step_pb');
 	elTwtGene = document.getElementById('tweet_gene_pb');
 	ancImg = document.getElementById('stateimg');
+	elPlayButton = document.getElementById('play');
+	elRepeatButton = document.getElementById('repeat');
+	elShuffleButton = document.getElementById('shuffle');
+	elPlayButtonImage = elPlayButton.firstChild;
+	elShuffleButtonImage = elShuffleButton.firstChild
+	elRepeatButtonImage = elRepeatButton.firstChild;
 	//サーバ側が準備出来たら、readData関数を呼ぶ。
 	req.onreadystatechange = readData;
 	obj = new State();
@@ -320,10 +327,12 @@ function setPauseState(_pauseState) {
 	pauseState = _pauseState;
 	if(pauseState == true) {
 		clearInterval(intvID);
-		setValue("play", "|>");
+		elPlayButton.style.backgroundColor = "#FFFFFF";
+		elPlayBottonImage.setAttribute("title", "停止中");
 	} else {
 		intvID = setInterval(function() { increase(); }, 500);
-		setValue("play", "||");
+		elPlayButton.style.backgroundColor = "#2E8B57";
+		elPlayButtonImage.setAttribute("title", "再生中");
 	}
 }
 function setShuffleState(_shuffleState) {
@@ -332,9 +341,11 @@ function setShuffleState(_shuffleState) {
 	}
 	shuffleState = _shuffleState;
 	if(shuffleState == true) {
-		setValue("shuffle", "shuffle on");
+		elShuffleButton.style.backgroundColor = "#2E8B57";
+		elShuffleButtonImage.setAttribute("title", "シャッフル　オン");
 	} else {
-		setValue("shuffle", "shuffle off");
+		elShuffleButton.style.backgroundColor = "#FFFFFF";
+		elShuffleButtonImage.setAttribute("title", "シャッフル　オフ");
 	}
 }
 function setRepeatState(_repeatState) {
@@ -343,11 +354,17 @@ function setRepeatState(_repeatState) {
 	}
 	repeatState = _repeatState;
 	if(repeatState == "all") {
-		setValue("repeat", "repeat all");
+		elRepeatButton.style.backgroundColor = "#2E8B57";
+		elRepeatButtonImage.setAttribute("src", "./lgbpimg/repeatAll.png");
+		elRepeatButtonImage.setAttribute("title", "リピート(全て)");
 	} else if(repeatState == "one") {
-		setValue("repeat", "repeat one");
+		elRepeatButton.style.backgroundColor = "#2E8B57";
+		elRepeatButtonImage.setAttribute("src", "./lgbpimg/repeat1.png");
+		elRepeatButtonImage.setAttribute("title", "リピート(世代)");
 	} else {
-		setValue("repeat", "repeat off");
+		elRepeatButton.style.backgroundColor = "#FFFFFF";
+		elRepeatButtonImage.setAttribute("src", "./lgbpimg/repeat.png");
+		elRepeatButtonImage.setAttribute("title", "リピート　オフ");
 	}
 }
 //受信用関数
@@ -403,17 +420,20 @@ function setImg(gene, step) {
 }
 function setGifs()
 {
-        var anc = document.getElementById('newgifs');
-        for(var ii = 1; ii <= 5; ii++)
-        {
-                var img = document.createElement('img');
-                var fname = "http://www.wetsteam.org/lifegamebot/gifs/";
-                var gene = newest.gene - ii;
-                fname += ("00000000" + gene).slice(-8) + ".gif";
-                img.setAttribute("src", fname);
-                img.setAttribute("alt", gene);
-                anc.appendChild(img);
-        }
+	var anc = document.getElementById('newgifs');
+	for(var ii = 1; ii <= 5 && newest.gene - ii > 0; ii++)
+	{
+		//var img = document.createElement('img');
+		var fname = "http://www.wetsteam.org/lifegamebot/gifs/";
+		var gene = newest.gene - ii;
+		fname += ("00000000" + gene).slice(-8) + ".gif";
+		//img.setAttribute("src", fname);
+		//img.setAttribute("alt", gene);
+		anc.childNodes[ii-1].setAttribute("src", fname);
+		anc.childNodes[ii-1].setAttribute("alt", gene);
+		anc.childNodes[ii-1].setAttribute("title", gene);
+		//anc.appendChild(img);
+	}
 }
 /*
 	getValue : 指定したDOM要素の値を取得する

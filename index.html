@@ -12,26 +12,42 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <link rel="stylesheet" href="lgb.css">
+  <link rel="stylesheet" href="lgbplayer.css">
 </head>
 <body>
 <h1 id="ライフゲームbot">ライフゲームbot</h1>
 <div id="lgbplayer" align="center">
-LifeGameBot player<br />
-<img id="stateimg" width="100px" height="100px" /><br />
-gene:<input type="text" id="gene">
-step:<input type="text" id="step">
-<input type="button" id="jump" value="jump" onclick="jump()"> <br />
-<input type="button" id="prev" value="|&lt;|&lt;|" onclick="prev()">
-<input type="button" id="play" value="|&gt;" onclick="play()">
-<input type="button" id="next_step" value="|&gt;|" onclick="increase()">
-<input type="button" id="next_gene" value="|&gt;|&gt;|" onclick="next()">
-<input type="button" id="shuffle" value="shuffle off" onclick="shuffle()">
-<input type="button" id="repeat" value="repeat off" onclick="repeat()">
-<br />
-<input type="button" value="tweet(step)" id="tweet_step_pb">
-<input type="button" value="tweet(gene)" id="tweet_gene_pb">
-<input type="button" value="wear(黒向け)" onclick="wear_pb('black')">
-<input type="button" value="wear(白向け)" onclick="wear_pb('white')">
+	<h2 id="LifeGameBotPlayer">-- life game bot player --</h2>
+	<div id="lgbp_middleman">
+		<div id="lgbp_counter">
+			<ul>
+				<li>gene:<input type="text" id="gene" /></li>
+				<li>step:<input type="text" id="step" /></li>
+				<li><br /><input type="button" id="jump" value="jump" onclick="jump()"></li>
+			</ul>
+		</div>
+		<div id="lgbp_image">
+			<img id="stateimg" width="100px" height="100px" src="./lgbpimg/dummy.png" alt="LifeGameBotPlayer" />
+		</div>
+		<div id="lgbp_APIbutton">
+			<ul>
+				<li><a href="javascript:void(0)" style="background-image:url(./lgbpimg/tshirtwhite.png);" onclick="wear_pb('white')" title="着る(白)"></a></li>
+				<li><a href="javascript:void(0)" style="background-image:url(./lgbpimg/tshirtblack.png);" onclick="wear_pb('black')" title="着る(黒)"></a></li>
+				<li><a href="javascript:void(0)" id="tweet_gene_pb" style="background-image:url(./lgbpimg/TweetGENE.png);" title="つぶやく(世代)"></a></li>
+				<li><a href="javascript:void(0)" id="tweet_step_pb" style="background-image:url(./lgbpimg/TweetSTEP.png);" title="つぶやく(ステップ)"></a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="lgbp_controlbutton">
+		<ul>
+			<li id="prev" onclick="prev()"><img src="./lgbpimg/prevgene.png" width="24px" height="24px" alt="前の世代" title="前の世代" /></li>
+			<li id="play" onclick="play()"><img src="./lgbpimg/play.png" width="24px" height="24px" alt="再生/一時停止" title="停止中" /></li>
+			<li id="next_step" onclick="increase()"><img src="./lgbpimg/nextstep.png" width="24px" height="24px" alt="次のステップ" title="次のステップ" /></li>
+			<li id="next_gene" onclick="next()"><img src="./lgbpimg/nextgene.png" width="24px" height="24px" alt="次の世代" title="次の世代" /></li>
+			<li id="shuffle" onclick="shuffle()"><img src="./lgbpimg/shuffle.png" width="24px" height="24px" alt="シャッフルスイッチ" title="シャッフル　オフ" /></li>
+			<li id="repeat" onclick="repeat()"><img src="./lgbpimg/repeat.png" width="24px" height="24px" alt="リピートスイッチ" title="リピート　オフ" /></li>
+		</ul>
+	</div>
 </div>
 <h2 id="概要">概要</h2>
 <ul>
@@ -53,10 +69,17 @@ step:<input type="text" id="step">
 <li>このページのソースは<a href="https://github.com/ikatake/lifegamebotpage">github</a>に於いて保管しています。</li>
 </ul>
 <h2 id="直近5世代のgif動画">直近5世代のGIF動画</h2>
-<p id="newgifs"> </p>
+<p id="newgifs">
+	<img width="100" height="100" src="./lgbpimg/dummy.png" alt="dummyimage" title="dummyimage" />
+	<img width="100" height="100" src="./lgbpimg/dummy.png" alt="dummyimage" title="dummyimage" />
+	<img width="100" height="100" src="./lgbpimg/dummy.png" alt="dummyimage" title="dummyimage" />
+	<img width="100" height="100" src="./lgbpimg/dummy.png" alt="dummyimage" title="dummyimage" />
+	<img width="100" height="100" src="./lgbpimg/dummy.png" alt="dummyimage" title="dummyimage" />
+</p>
 <p id="wear">
 <svg id="suzuri_svg" width="0" height="0"></svg>
 <canvas id="suzuri_canvas" width="0" height="0"></canvas>
 </p>
+<div id="backtoindex"><a href="http://www.wetsteam.org">しめり蒸気へ戻る</a></div>
 </body>
 </html>

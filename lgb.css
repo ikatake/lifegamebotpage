@@ -57,8 +57,13 @@ li
 
 p
 {
-	padding-left: 40px;
-	padding-right: 40px;
+	padding-left: 50px;
+	/*padding-right: 40px;*/
+}
+
+p#wear
+{
+	display:none;
 }
 
 h2#画像集 + p, p + p
@@ -87,4 +92,31 @@ div#lgbviewer
 {
 	text-align:center;
 	margin-top:30px;
+}
+
+div#backtoindex
+{
+	background-color:#ffffff;
+	width :400px;
+	height: 30px;
+	padding-bottom:10px;
+	
+	position:relative;
+	top:25px;
+	left:450px;
+}
+
+div#backtoindex a
+{
+	display: block;
+	background-color: #000000;
+	
+	width: 300px;
+	padding-right:100px;
+	height: 14px;
+	line-height: 14px;
+	padding-top:8px;
+	padding-bottom:8px;
+	
+	text-align: right;
 }
