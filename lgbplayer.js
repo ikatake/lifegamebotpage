@@ -332,7 +332,7 @@ function setPauseState(_pauseState) {
 	} else {
 		intvID = setInterval(function() { increase(); }, 500);
 		elPlayButton.style.backgroundColor = "#2E8B57";
-		elPlayBottonImage.setAttribute("title", "再生中");
+		elPlayButtonImage.setAttribute("title", "再生中");
 	}
 }
 function setShuffleState(_shuffleState) {
