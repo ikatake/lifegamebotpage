@@ -7,7 +7,7 @@ var ancImg;
 var arlen;
 var pauseState, repeatState, shuffleState;
 var intvID;
-var elTwtStep, elTwtGene;
+var elTwtStep, elTwtGene, elPlayButton, elRepeatButton, elShuffleButton, elRepeatButtonImage;
 var shirtColor;
 //ページ読み込み時の処理を行う。
 function proc_onload() {
@@ -22,6 +22,10 @@ function proc_onload() {
 	elTwtStep = document.getElementById('tweet_step_pb');
 	elTwtGene = document.getElementById('tweet_gene_pb');
 	ancImg = document.getElementById('stateimg');
+	elPlayButton = document.getElementById('play');
+	elRepeatButton = document.getElementById('repeat');
+	elShuffleButton = document.getElementById('shuffle');
+	elRepeatButtonImage = elRepeatButton.firstChild;
 	//サーバ側が準備出来たら、readData関数を呼ぶ。
 	req.onreadystatechange = readData;
 	obj = new State();
@@ -320,10 +324,12 @@ function setPauseState(_pauseState) {
 	pauseState = _pauseState;
 	if(pauseState == true) {
 		clearInterval(intvID);
-		setValue("play", "|>");
+		//setValue("play", "|>");
+		elPlayButton.style.backgroundColor = "#FFFFFF";
 	} else {
 		intvID = setInterval(function() { increase(); }, 500);
-		setValue("play", "||");
+		//setValue("play", "||");
+		elPlayButton.style.backgroundColor = "#2E8B57";
 	}
 }
 function setShuffleState(_shuffleState) {
@@ -332,9 +338,11 @@ function setShuffleState(_shuffleState) {
 	}
 	shuffleState = _shuffleState;
 	if(shuffleState == true) {
-		setValue("shuffle", "shuffle on");
+		//setValue("shuffle", "shuffle on");
+		elShuffleButton.style.backgroundColor = "#2E8B57";
 	} else {
-		setValue("shuffle", "shuffle off");
+		//setValue("shuffle", "shuffle off");
+		elShuffleButton.style.backgroundColor = "#FFFFFF";
 	}
 }
 function setRepeatState(_repeatState) {
@@ -343,11 +351,17 @@ function setRepeatState(_repeatState) {
 	}
 	repeatState = _repeatState;
 	if(repeatState == "all") {
-		setValue("repeat", "repeat all");
+		//setValue("repeat", "repeat all");
+		elRepeatButton.style.backgroundColor = "#2E8B57";
+		elRepeatButtonImage.setAttribute("src", "./lgbpimg/repeatAll.png");
 	} else if(repeatState == "one") {
-		setValue("repeat", "repeat one");
+		//setValue("repeat", "repeat one");
+		elRepeatButton.style.backgroundColor = "#2E8B57";
+		elRepeatButtonImage.setAttribute("src", "./lgbpimg/repeat1.png");
 	} else {
-		setValue("repeat", "repeat off");
+		//setValue("repeat", "repeat off");
+		elRepeatButton.style.backgroundColor = "#FFFFFF";
+		elRepeatButtonImage.setAttribute("src", "./lgbpimg/repeat.png");
 	}
 }
 //受信用関数
