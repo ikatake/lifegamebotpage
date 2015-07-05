@@ -355,7 +355,7 @@ function setRepeatState(_repeatState) {
 	repeatState = _repeatState;
 	if(repeatState == "all") {
 		elRepeatButton.style.backgroundColor = "#2E8B57";
-		elRepeatButtonImage.setAttribute("src", "./lgbpimg/repeatAll.png");
+		elRepeatButtonImage.setAttribute("src", "./lgbpimg/repeatALL.png");
 		elRepeatButtonImage.setAttribute("title", "リピート(全て)");
 	} else if(repeatState == "one") {
 		elRepeatButton.style.backgroundColor = "#2E8B57";
@@ -421,7 +421,7 @@ function setImg(gene, step) {
 function setGifs()
 {
 	var anc = document.getElementById('newgifs');
-	var gifimgs = anc.children.
+	var gifimgs = anc.children;
 	for(var ii = 1; ii <= 5 && newest.gene - ii > 0; ii++)
 	{
 		//var img = document.createElement('img');
