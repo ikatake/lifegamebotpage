@@ -71,6 +71,8 @@ div#lgbp_counter ul li input {
 	font-size: 30px;
 	font-weight: lighter;
 	
+	text-align: right;
+	
 	/*-moz-box-shadow: inset 1px 4px 9px -6px rgba(0,0,0,0.5);
 	-webkit-box-shadow: inset 1px 4px 9px -6px rgba(0, 0, 0, 0.5);
 	box-shadow: inset 1px 4px 9px -6px rgba(0,0,0,0.5);*/
@@ -82,6 +84,8 @@ div#lgbp_counter ul li input#jump {
 	
 	font-size: 15px;
 	font-weight: lighter;
+	
+	text-align: center;
 }
 
 div#lgbp_image {
