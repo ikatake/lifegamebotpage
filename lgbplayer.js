@@ -37,7 +37,7 @@ function proc_onload() {
 	req.send("");
 	setPauseState(true);
 	setShuffleState(false);
-	setRepeatState("off");
+	setRepeatState("one");
 }
 function proc_onload_measure() {
 	req = new XMLHttpRequest();
