@@ -113,34 +113,6 @@ sub measure {
 	print "Content-type: application/json; charset=utf-8\n\n";
 	print encode_json( \@arlen );
 }
-sub measure_old {
-	my $dname = "./stateLogs/";
-	my $str = "";
-	my $len = 0;
-	my $gene = $_[0];
-	my $data;
-	my @directory;
-	$dname .= sprintf("%08d",$_[0]). "/";
-	print $dname;
-	if(!(-e $dname)) {#file is not exist.
-		$data = {gene => $gene, len => -1};
-		print "Content-type: application/json; charset=utf-8\n\n";
-		print encode_json( $data );
-		return;
-	}
-	opendir(my $dh, $dname) or die "$dname:$!";
-	@directory = grep {/\.txt$/} readdir($dh);
-	closedir($dh);
-	$len = @directory;
-	
-	$data = {
-		gene => $gene,
-		len => $len,
-	};
-
-	print "Content-type: application/json; charset=utf-8\n\n";
-	print encode_json( $data );
-}
 sub load_current {
 	my $state_str = "";
 	my $fname = "/home/ikatake/local/twlg/state.txt";
