@@ -2,6 +2,7 @@
 
 require "cgi"
 require "./wear_util"
+require 'cairo'
 
 cgi = CGI.new
 params = cgi.params
@@ -31,7 +32,6 @@ p params;
 
 
 
-require 'cairo'
 
 format = Cairo::FORMAT_ARGB32
 width = 300
@@ -53,7 +53,6 @@ surface.write_to_png("hinomaru.png")
 
 #!/usr/local/bin/ruby
 
-require 'cgi'
 
 print "Content-Type: text/html\n\n"
 print "<html><head><title>nyan</title></head><body>\n"
