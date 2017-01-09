@@ -1,11 +1,12 @@
-require_relative './wear_util.rb'
+require_relative './suzuri_util.rb'
+require_relative './lgb_util.rb'
 
 r = get_state_text(1980, 80);
 
 p r
 
-convert_img_sticker(r, 'white')
-
+r = convert_img_sticker(r, 'white')
+p r 
 
 p "end"
 
