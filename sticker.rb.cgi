@@ -2,7 +2,7 @@
 
 #ステッカー作成用cgi
 
-require_relative './wear_util.rb'
+require_relative './suzuri_util.rb'
 require 'cgi'
 
 
