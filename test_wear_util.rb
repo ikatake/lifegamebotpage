@@ -4,7 +4,7 @@ r = get_state_text(1980, 80);
 
 p r
 
-convert_img(r, 'white')
+convert_img_sticker(r, 'white')
 
 
 p "end"
