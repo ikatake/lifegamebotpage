@@ -29,16 +29,14 @@ def get_lastest_gene_step()
   file.close
   lines = text.split(/\n/)
   arr = lines[10].split(/\t/)
-  gene = arr[2]
+  gene = arr[1].to_i
   arr = lines[11].split(/\t/)
-  step = arr[2]
-  p gene
-  p step
+  step = arr[1].to_i
   arr = [gene, step]
   return arr
 end
 
-def get_lastest_state_test()
+def get_lastest_state_text()
   filename = "/home/ikatake/local/twlg/state.txt"
   file = File.open(filename)
   text = file.read
@@ -73,8 +71,9 @@ def is_valid_gene_step?(gene, step)
 end
 
 def measure_gene(gene)
-  dir_path = 'home/ikatake/www/wetsteam/lifegamebot/stateLogs/'
+  dir_path = '/home/ikatake/www/wetsteam/lifegamebot/stateLogs/'
   dir_path << sprintf("%08d/", gene) 
+  p dir_path
   if ( FileTest.exist?(dir_path) && Filetest.directory?(dir_path) ) == false
     return -1;
   end
