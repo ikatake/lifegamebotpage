@@ -40,8 +40,6 @@ end
 #check parameters
 gene = cgi['gene'].to_i
 step = cgi['step'].to_i
-p  gene
-p  step
 p measure_gene(gene)
 if( is_valid_gene_step?(gene, step) == false)
   print "invalid gene or step."
@@ -49,8 +47,8 @@ if( is_valid_gene_step?(gene, step) == false)
 end
 
 #get state
-get_state_text(gene, step)
-
+state = get_state_text(gene, step)
+p state
 
 #make iamge file
 

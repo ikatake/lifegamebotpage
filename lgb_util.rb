@@ -3,8 +3,6 @@
 #ライフゲームbot用の便利関数たち。
 
 def get_state_text(gene, step)
-  p gene
-  p step
   # set filename
   genestr = sprintf("%08d", gene)
   stepstr = sprintf("%08d", step)
@@ -73,11 +71,10 @@ end
 def measure_gene(gene)
   dir_path = '/home/ikatake/www/wetsteam/lifegamebot/stateLogs/'
   dir_path << sprintf("%08d/", gene) 
-  p dir_path
-  if ( FileTest.exist?(dir_path) && Filetest.directory?(dir_path) ) == false
+  if ( FileTest.exist?(dir_path) && FileTest.directory?(dir_path) ) == false
     return -1;
   end
-  arr = Dir.glob(dir_path & "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].txt")
+  arr = Dir.glob(dir_path + "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].txt")
   return arr.size
 end
   
