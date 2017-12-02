@@ -7,7 +7,8 @@
 require_relative './suzuri_util.rb'
 require_relative './lgb_util.rb'
 require 'cgi'
-
+require 'date'
+require 'cairo'
 
 #str = ENV['QUERY_STRING']
 #print str
@@ -49,8 +50,50 @@ end
 #get state
 state = get_state_text(gene, step)
 p state
+file_name = "tmp/" + gene.to_s + "_" + step.to_s + "_"
+file_name += Time.now.to_i.to_s + ".png"
+p file_name
 
 #make iamge file
+format = Cairo::FORMAT_ARGB32
+width = 630
+height = 630
+surface = Cairo::ImageSurface.new(format, width, height)
+context = Cairo::Context.new(surface)
+
+cell_size = 50
+cell_margin = 10
+line_width = 2
+top_margin = 15
+left_margin = 15
+line_width = 4
+
+context.translate(top_margin, left_margin)
+context.set_line_width(line_width)
+arr = state.split(/\\n/)
+for line in arr do
+  charr = line.split("")
+  for ch in charr do
+    context.rectangle(0, 0, cell_size, cell_size)
+    if(ch == "0")
+      #draw white rectangle
+      #context.set_source_rgb(1, 1, 1)
+    elsif(ch == "1")
+      #draw black rectangle
+      context.set_source_rgb(0, 0, 0)
+      context.fill_preserve
+    end
+    context.set_source_rgb(0, 0, 0)
+    context.stroke
+    # 1セル分右にずらす
+    context.translate( (cell_size + cell_margin), 0)
+  end
+  #左右位置を元に戻して、1段下にずらす。
+  context.translate( -(cell_size + cell_margin) * charr.length, 0)
+  context.translate( 0, (cell_size + cell_margin) )
+end
+
+surface.write_to_png(file_name)
 
 #send to suzuri
 
