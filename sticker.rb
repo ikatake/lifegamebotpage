@@ -4,7 +4,7 @@
 
 #ステッカー作成用cgi
 
-require_relative './suzuri_util.rb'
+#require_relative './suzuri_util.rb'
 require_relative './lgb_util.rb'
 require 'cgi'
 require 'date'
@@ -23,21 +23,31 @@ print "<br>"
 
 if (cgi.has_key?('color')  == false) 
   print "invalid parameters.(need 'color')."
-  return
+  print "</body></html>\n"
+  exit 0
 end
 if (cgi.has_key?('gene') ^ cgi.has_key?('step'))
   print "invalud parameters.(need both 'gene' and 'step')"
-  return
+  print "</body></html>\n"
+  exit 0
+end
+
+#read argument (color)
+if(cgi['color'] == "black")
+  color = "black"
+else
+  color = "white"
 end
 
 #read argument (gene and step)
-if (cgi.has_key?('gene') & cgi.has_key?('step'))
+if (cgi.has_key?('gene') && cgi.has_key?('step'))
   gene = cgi['gene'].to_i
   step = cgi['step'].to_i
   p measure_gene(gene)
   if( is_valid_gene_step?(gene, step) == false)
     print "invalid gene or step."
-    return
+    print "</body></html>\n"
+    exit 0
   end
   state = get_state_text(gene, step)
 else #nothing gene & step => get lastst state
@@ -47,7 +57,6 @@ else #nothing gene & step => get lastst state
   step = arr[1]
 end
 	p state
-
 
 #make iamge file
 file_name = "tmp/" + gene.to_s + "_" + step.to_s + "_"
@@ -66,6 +75,11 @@ top_margin = 15
 left_margin = 15
 line_width = 4
 
+#fill background color(black only)
+context.rectangle(0, 0, width, height)
+context.set_source_rgb(0, 0, 0,)
+context.fill
+
 context.translate(top_margin, left_margin)
 context.set_line_width(line_width)
 arr = state.split(/\\n/)
@@ -78,10 +92,18 @@ for line in arr do
       #context.set_source_rgb(1, 1, 1)
     elsif(ch == "1")
       #draw black rectangle
-      context.set_source_rgb(0, 0, 0)
+      if(color == "white") 
+        context.set_source_rgb(0, 0, 0)
+      elsif(color == "black")
+        context.set_source_rgb(0, 1, 0)
+      end
       context.fill_preserve
     end
-    context.set_source_rgb(0, 0, 0)
+    if(color == "white") 
+      context.set_source_rgb(0, 0, 0)
+    elsif(color == "black")
+      context.set_source_rgb(0, 1, 0)
+    end
     context.stroke
     # 1セル分右にずらす
     context.translate( (cell_size + cell_margin), 0)
@@ -93,36 +115,40 @@ end
 
 surface.write_to_png(file_name)
 
-#send to suzuri
-conn = Faraday::Connection.new(:url => 'https://suzuri.jp/') do
-|builder|
-  builder.use Faraday::Request::UrlEncoded
-  builder.use Faraday::Response::Logger
-  builder.use Faraday::Adapter::NetHttp
-end
-
-response = conn.post do |request|
-  request.url  'api/v1/materials'
-  request.headers['Authorization'] = 'Bearer 3df61022350585b2e5a2890ef9cdd2201ef5897c50f655cd618fe90b8bac3c76'
-  request.headers['Content-Type'] = 'application/json'
-  request.body = '{
-    "title": "@_lifegamebot g:1 s:1",
-    "texture": "http://www.wetsteam.org/lifegamebot/tmpimg/1_1.png",
-    "price": 0,
-    "description": "@_lifegamebot g:1 s:1 sticker",
-    "products": 
-    [{
-      "itemId": 11,
-      "published": true,
-      "resizeMoed": "contain"
-    }]
-  }'
-end
-json = JSON.parser.new(response.body)
-p json.parse
-#and so on.
-
 print "</body></html>\n"
+#send to suzuri
+
+def send_sticker()
+  return
+  conn = Faraday::Connection.new(:url => 'https://suzuri.jp/') do
+  |builder|
+    builder.use Faraday::Request::UrlEncoded
+    builder.use Faraday::Response::Logger
+    builder.use Faraday::Adapter::NetHttp
+  end
+
+  response = conn.post do |request|
+    request.url  'api/v1/materials'
+    request.headers['Authorization'] = 'Bearer 3df61022350585b2e5a2890ef9cdd2201ef5897c50f655cd618fe90b8bac3c76'
+    request.headers['Content-Type'] = 'application/json'
+    request.body = '{
+      "title": "@_lifegamebot g:1 s:1",
+      "texture": "http://www.wetsteam.org/lifegamebot/tmpimg/1_1.png",
+      "price": 0,
+      "description": "@_lifegamebot g:1 s:1 sticker",
+      "products": 
+      [{
+        "itemId": 11,
+        "published": true,
+        "resizeMoed": "contain"
+      }]
+    }'
+  end
+  json = JSON.parser.new(response.body)
+  p json.parse
+  #and so on.
+
+end
 
 
 
