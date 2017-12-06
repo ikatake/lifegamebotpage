@@ -4,15 +4,12 @@
 
 #ステッカー作成用cgi
 
-#require_relative './suzuri_util.rb'
+require_relative './suzuri_util.rb'
 require_relative './lgb_util.rb'
 require 'cgi'
 require 'date'
 require 'cairo'
 require 'faraday'
-
-#str = ENV['QUERY_STRING']
-#print str
 
 print "Content-Type: text/html\n\n"
 print "<html><head><title>nyan</title></head><body>\n"
@@ -56,7 +53,6 @@ else #nothing gene & step => get lastst state
   gene = arr[0]
   step = arr[1]
 end
-	p state
 
 #make iamge file
 file_name = "tmp/" + gene.to_s + "_" + step.to_s + "_"
@@ -115,41 +111,7 @@ end
 
 surface.write_to_png(file_name)
 
+suzuri("http://www.wetsteam.org/lifegamebot/tmpimg/1_1.png", gene, step, "sticker")
 print "</body></html>\n"
 #send to suzuri
-
-def send_sticker()
-  return
-  conn = Faraday::Connection.new(:url => 'https://suzuri.jp/') do
-  |builder|
-    builder.use Faraday::Request::UrlEncoded
-    builder.use Faraday::Response::Logger
-    builder.use Faraday::Adapter::NetHttp
-  end
-
-  response = conn.post do |request|
-    request.url  'api/v1/materials'
-    request.headers['Authorization'] = 'Bearer 3df61022350585b2e5a2890ef9cdd2201ef5897c50f655cd618fe90b8bac3c76'
-    request.headers['Content-Type'] = 'application/json'
-    request.body = '{
-      "title": "@_lifegamebot g:1 s:1",
-      "texture": "http://www.wetsteam.org/lifegamebot/tmpimg/1_1.png",
-      "price": 0,
-      "description": "@_lifegamebot g:1 s:1 sticker",
-      "products": 
-      [{
-        "itemId": 11,
-        "published": true,
-        "resizeMoed": "contain"
-      }]
-    }'
-  end
-  json = JSON.parser.new(response.body)
-  p json.parse
-  #and so on.
-
-end
-
-
-
 
