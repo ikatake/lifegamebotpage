@@ -6,7 +6,7 @@ def get_state_text(gene, step)
   # set filename
   genestr = sprintf("%08d", gene)
   stepstr = sprintf("%08d", step)
-  filename = ENV['HOME'] + "/www/wetsteam/lifegamebot/stateLogs/"
+  filename = "/home/ikatake/www/wetsteam/lifegamebot/stateLogs/"
   filename = filename + genestr  + "\/" + stepstr + ".txt"
   file = File.open(filename)
   text = file.read
