@@ -54,6 +54,12 @@ function wear_pb(color) {
 	req.open("get", pathCgi+"?call=jump&gene="+gene+"&step="+step, true);
 	req.send("");
 }
+function sticker_pb(color) {
+	stickerColor = color;
+	var gene = parseInt(getValue('gene'));
+	var step = parseInt(getValue('step'));
+	window.open("sticker.rb?gene="+gene+"&step="+step+"&color="color);
+}
 function jump() {
 	var gene = parseInt(getValue('gene'));
 	var step = parseInt(getValue('step'));
