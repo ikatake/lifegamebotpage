@@ -55,10 +55,11 @@ function wear_pb(color) {
 	req.send("");
 }
 function sticker_pb(color) {
-	stickerColor = color;
 	var gene = parseInt(getValue('gene'));
 	var step = parseInt(getValue('step'));
-	window.open("sticker.rb?gene="+gene+"&step="+step+"&color="color);
+	var add = "sticker.rb?gene=" + gene;
+	add = add + "&step=" + step + "&color=" + color;
+	window.open(add, "sticker.rb");
 }
 function jump() {
 	var gene = parseInt(getValue('gene'));
