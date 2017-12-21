@@ -5,6 +5,7 @@
 
 require_relative './suzuri_util.rb'
 require_relative './lgb_util.rb'
+require_relative './draw_rmagick.rb'
 require 'rmagick'
 require 'cgi'
 require 'date'
@@ -61,13 +62,11 @@ file_name += Time.now.to_i.to_s + ".png"
 #set image file size
 img_size = 992   #img canvas size[px] (both width and height)
 field_size = 700 #cellular field size[px] = img_size / sqrt(2)
-
 cell_size = 60
 cell_margin = 10
 line_width = 4
 margin = (field_size - cell_margin * 9 - cell_size * 10) / 2
-x = (img_size - field_size) * 0.5 + margin
-y = x
+p = (img_size - field_size) * 0.5 + margin
 
 if(color == "white")
   color_bg = "#ffffff"
@@ -77,42 +76,18 @@ elsif(color == "black")
   color_front = "#00ff00"
 end
 img = Magick::Image.new(img_size, img_size){self.background_color=color_bg}
+draw_state(img, cell_size, cell_margin, line_width, p, p,
+  color_bg, color_front, state)
+draw = Magick::Draw.new
 
-color_stroke = color_front 
-
-arr = state.split(/\\n/)
-for line in arr do
-  charr = line.split("")
-  for ch in charr do
-    if(ch == "0")
-      color_fill = color_bg
-    elsif(ch == "1")
-      color_fill = color_front
-    end
-    #draw out rectangle
-    draw = Magick::Draw.new
-    draw.stroke(color_stroke)
-    draw.stroke_width(line_width)
-    draw.fill(color_fill)
-    draw.rectangle(x, y, x + cell_size, y + cell_size)
-    draw.draw(img)
-    # 1セル分右にずらす
-    x += cell_size + cell_margin
-  end
-  #左右位置を元に戻して、1段下にずらす。
-  x = (img_size - field_size) * 0.5 + margin
-  y += cell_size + cell_margin
-end
-#png.save(file_name)
+#draw.annotate(img, 100, 100, 150, 150, "lifegamebot") do
+#  self.font = "Courier"
+#  self.fill = 'black'
+#  self.stroke = 'transparent'
+#  self.pointsize = 54
+#  self.gravity = Magick::NorthWestGravity
+#end
 img.write("r.png")
-
-draw.annotate(img, 100, 100, 150, 150, "lifegamebot") do
-  self.font = "Courier"
-  self.fill = 'black'
-  self.stroke = 'transparent'
-  self.pointsize = 54
-  self.gravity = Magick::NorthWestGravity
-end
 
 #img_address = "http://www.wetsteam.org/lifegamebot/" + file_name
 #print %Q{<span style="color:white"}
