@@ -9,6 +9,7 @@ require_relative './draw_rmagick.rb'
 require 'rmagick'
 require 'cgi'
 require 'date'
+include Math
 
 print "Content-Type: text/html\n\n"
 print "<html><head><title>nyan</title></head><body>\n"
@@ -79,6 +80,46 @@ img = Magick::Image.new(img_size, img_size){self.background_color=color_bg}
 draw_state(img, cell_size, cell_margin, line_width, p, p,
   color_bg, color_front, state)
 draw = Magick::Draw.new
+draw.stroke('red')
+draw.fill('transparent')
+draw.stroke_width(1)
+draw.circle( img_size * 0.5, img_size * 0.5, img_size * 0.5, img_size )
+draw.draw(img)
+str = '@_lifegamebot'
+r = img_size * 0.48 #半径
+c = 30 #1文字の幅[px]
+l = c * str.length
+angle_string = l / r 
+angle_charactor = c / r
+charr = str.split("")
+theta0 = PI / 2 * 1
+ii = 0
+p r
+p l
+p angle_string * 180 / PI
+p angle_charactor * 180 / PI
+p theta0
+p theta0 * 180 / PI
+p str
+for ch in charr do
+  ii += 1;
+  theta = theta0 + angle_string * 0.5 - ( ii - 0.5 ) * angle_charactor
+  x = img_size / 2 + r * cos(theta)
+  y = img_size / 2 - r * sin(theta)
+	p theta * 180 / PI
+	p x
+	p y
+	p ch
+  ch = ch.gsub(/^@/, '\@')
+  draw.annotate(img, c, c, x, y, ch) do
+    self.font = "Courier"
+    self.fill = color_front
+    self.stroke = 'transparent'
+    self.pointsize = 60
+    self.gravity = Magick::NorthWestGravity
+    self.rotation = -1.0 * (theta * 180 / PI - 90)
+  end
+end
 
 #draw.annotate(img, 100, 100, 150, 150, "lifegamebot") do
 #  self.font = "Courier"
@@ -86,6 +127,7 @@ draw = Magick::Draw.new
 #  self.stroke = 'transparent'
 #  self.pointsize = 54
 #  self.gravity = Magick::NorthWestGravity
+#  self.rotation = 30
 #end
 img.write("r.png")
 
