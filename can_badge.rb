@@ -85,50 +85,23 @@ draw.fill('transparent')
 draw.stroke_width(1)
 draw.circle( img_size * 0.5, img_size * 0.5, img_size * 0.5, img_size )
 draw.draw(img)
-str = '@_lifegamebot'
-r = img_size * 0.48 #半径
-c = 30 #1文字の幅[px]
-l = c * str.length
-angle_string = l / r 
-angle_charactor = c / r
-charr = str.split("")
-theta0 = PI / 2 * 1
-ii = 0
-p r
-p l
-p angle_string * 180 / PI
-p angle_charactor * 180 / PI
-p theta0
-p theta0 * 180 / PI
-p str
-for ch in charr do
-  ii += 1;
-  theta = theta0 + angle_string * 0.5 - ( ii - 0.5 ) * angle_charactor
-  x = img_size / 2 + r * cos(theta)
-  y = img_size / 2 - r * sin(theta)
-	p theta * 180 / PI
-	p x
-	p y
-	p ch
-  ch = ch.gsub(/^@/, '\@')
-  draw.annotate(img, c, c, x, y, ch) do
-    self.font = "Courier"
-    self.fill = color_front
-    self.stroke = 'transparent'
-    self.pointsize = 60
-    self.gravity = Magick::NorthWestGravity
-    self.rotation = -1.0 * (theta * 180 / PI - 90)
-  end
-end
+radius = img_size * 0.49 #文字を並べる円の半径。tuning要素
+width_char = 40 #1文字の幅[px]。tuning要素
+font_size = 80 #文字サイズ。tuning要素
 
-#draw.annotate(img, 100, 100, 150, 150, "lifegamebot") do
-#  self.font = "Courier"
-#  self.fill = 'black'
-#  self.stroke = 'transparent'
-#  self.pointsize = 54
-#  self.gravity = Magick::NorthWestGravity
-#  self.rotation = 30
-#end
+str = '@_lifegamebot'
+theta0 = PI / 2 * 1
+annotate_on_arc(img, str, width_char, radius, img_size / 2, img_size / 2, 
+  theta0, "Courier", color_front, 'transparent', font_size)
+str = "step:#{step}"
+theta0 = PI / 2 * 0
+annotate_on_arc(img, str, width_char, radius, img_size / 2, img_size / 2, 
+  theta0, "Courier", color_front, 'transparent', font_size)
+str = "gene:#{gene}"
+theta0 = PI / 2 * 2
+annotate_on_arc(img, str, width_char, radius, img_size / 2, img_size / 2, 
+  theta0, "Courier", color_front, 'transparent', font_size)
+
 img.write("r.png")
 
 #img_address = "http://www.wetsteam.org/lifegamebot/" + file_name
@@ -148,4 +121,5 @@ img.write("r.png")
 #end
 print "</body></html>\n"
 #send to suzuri
+
 
