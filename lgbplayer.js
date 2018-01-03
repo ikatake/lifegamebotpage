@@ -61,6 +61,13 @@ function sticker_pb(color) {
 	add = add + "&step=" + step + "&color=" + color;
 	window.open(add, "sticker.rb");
 }
+function can-badge_pb(color) {
+	var gene = parseInt(getValue('gene'));
+	var step = parseInt(getValue('step'));
+	var add = "can_badge.rb?gene=" + gene;
+	add = add + "&step=" + step + "&color=" + color;
+	window.open(add, "can_badge.rb");
+}
 function jump() {
 	var gene = parseInt(getValue('gene'));
 	var step = parseInt(getValue('step'));
