@@ -21,7 +21,7 @@ h2#LifeGameBotPlayer {
 }
 
 div#lgbp_middleman {
-	padding:20px 0;
+	padding:0 0 20px 0;
 	width: 800px;
 	height: 100px;
 	min-height: 100px;
@@ -32,6 +32,7 @@ div#lgbp_counter {
 	
 	width: 250px;
 	padding-left:50px;
+	padding-top:20px;
 }
 
 div#lgbp_counter ul {
@@ -92,7 +93,7 @@ div#lgbp_image {
 	float:left;
 	
 	width: 150px;
-	padding: 0 25px 0 25px;
+	padding: 20px 25px 0 25px;
 }
 
 div#lgbp_image img {
@@ -111,7 +112,7 @@ div#lgbp_APIbutton {
 
 div#lgbp_APIbutton ul {
 	overflow:hidden;
-	padding: 20px 0;
+	padding: 10px 0;
 	margin: 0;
 }
 
@@ -123,7 +124,7 @@ div#lgbp_APIbutton ul li {
 	height:60px;
 	
 	padding:0;
-	margin:0 5px 0 0;
+	margin:0 5px 5px 0;
 	
 }
 
