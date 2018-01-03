@@ -85,40 +85,45 @@ draw.fill('transparent')
 draw.stroke_width(1)
 draw.circle( img_size * 0.5, img_size * 0.5, img_size * 0.5, img_size )
 draw.draw(img)
-radius = img_size * 0.49 #文字を並べる円の半径。tuning要素
-width_char = 40 #1文字の幅[px]。tuning要素
-font_size = 80 #文字サイズ。tuning要素
+radius = img_size * 0.502 #文字を並べる円の半径。tuning要素
+width_char = 42 #1文字の幅[px]。tuning要素
+font_size = 76 #文字サイズ。tuning要素
 
 str = '@_lifegamebot'
+font = './font/mplus-2m-bold.ttf'
 theta0 = PI / 2 * 1
 annotate_on_arc(img, str, width_char, radius, img_size / 2, img_size / 2, 
-  theta0, "Courier", color_front, 'transparent', font_size)
+  theta0, font, color_front, 'transparent', font_size)
 str = "step:#{step}"
 theta0 = PI / 2 * 0
 annotate_on_arc(img, str, width_char, radius, img_size / 2, img_size / 2, 
-  theta0, "Courier", color_front, 'transparent', font_size)
+  theta0, font, color_front, 'transparent', font_size)
 str = "gene:#{gene}"
 theta0 = PI / 2 * 2
 annotate_on_arc(img, str, width_char, radius, img_size / 2, img_size / 2, 
-  theta0, "Courier", color_front, 'transparent', font_size)
+  theta0, font, color_front, 'transparent', font_size)
+str = "'Life is Beautiful.'"
+theta0 = PI / 2 * 3
+annotate_on_arc(img, str, width_char * 0.8, radius, img_size / 2, img_size / 2, 
+  theta0, font, color_front, 'transparent', font_size* 0.8)
 
-img.write("r.png")
+img.write(file_name)
 
-#img_address = "http://www.wetsteam.org/lifegamebot/" + file_name
-#print %Q{<span style="color:white"}
-#ret = suzuri( img_address, gene, step, "sticker")
-#print %Q{</span>}
-#p ret
-#if(ret[0] == "3" || ret[0] == "4" || ret[0] == "5")
-#  print "</br>生成に失敗しました。さようなら。</br>\n"
-#  print %Q{<script type="text/javascript">\n}
-#  print %Q{<!-- \nwindow.open('about:_blank','_self').close()\n -->\n}
-#  print %Q{</script>\n}
-#else
-#  print %Q{<script type="text/javascript">\n}
-#  print %Q{<!-- \nwindow.location.href='#{ret}'\n -->\n}
-#  print %Q{</script>\n}
-#end
+img_address = "http://www.wetsteam.org/lifegamebot/" + file_name
+print %Q{<span style="color:white"}
+ret = suzuri( img_address, gene, step, "can_badge")
+print %Q{</span>}
+p ret
+if(ret[0] == "3" || ret[0] == "4" || ret[0] == "5")
+  print "</br>生成に失敗しました。さようなら。</br>\n"
+  print %Q{<script type="text/javascript">\n}
+  print %Q{<!-- \nwindow.open('about:_blank','_self').close()\n -->\n}
+  print %Q{</script>\n}
+else
+  print %Q{<script type="text/javascript">\n}
+  print %Q{<!-- \nwindow.location.href='#{ret}'\n -->\n}
+  print %Q{</script>\n}
+end
 print "</body></html>\n"
 #send to suzuri
 

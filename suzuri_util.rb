@@ -21,7 +21,12 @@ def suzuri(img_path, gene, step, material)
     products = '[{
       "itemId": 11, "published": true, "resizeMode": "contain"
     }]'
+  elsif(material == "can_badge")
+    products = '[{
+      "itemId": 17, "published": true, "resizeMode": "contain", "exemplaryItemVariantId": 848
+    }]'
   end
+
   response = conn.post do |request|
     request.url 'api/v1/materials'
     request.headers['Authorization'] = 'Bearer ' + key
