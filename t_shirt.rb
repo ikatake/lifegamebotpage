@@ -115,6 +115,10 @@ annotate(img, str_top, width_char * str_top.length, height_text,
   margin_left, y_top_text, font, color_front, 'transparent', font_size)
 draw_state(img, cell_size, cell_margin, line_width, margin_left, y_cells,
   color_bg, color_front, state)
+annotate(img, str_bottom1, width_char * str_bottom1.length, height_text,
+  margin_left, y_bottom_text1, font, color_front, 'transparent', font_size)
+annotate(img, str_bottom2, width_char * str_bottom2.length, height_text,
+  margin_left, y_bottom_text2, font, color_front, 'transparent', font_size)
 
 
 #img.write(file_name)
