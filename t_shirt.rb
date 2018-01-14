@@ -91,9 +91,7 @@ font_size = 200 #文字サイズ。tuning要素
 y_top_text = margin_top
 y_cells = y_top_text + height_text + space_top_text
 cell_field_size = cell_size * num_cells + cell_margin * (num_cells - 1)
-	p cell_field_size
 y_bottom_text1 = y_cells + cell_field_size + space_bottom_text
-	p y_bottom_text1
 y_bottom_text2 = y_bottom_text1 + height_text
 #set image width
 str_top = '@_lifegamebot'
@@ -122,26 +120,22 @@ annotate(img, str_bottom1, width_char * str_bottom1.length, height_text,
 annotate(img, str_bottom2, width_char * str_bottom2.length, height_text,
   margin_left, y_bottom_text2, font, color_front, 'transparent', font_size)
 
-#img.write(file_name)
-img.write('r.png')
+img.write(file_name)
 
-#img_address = "http://www.wetsteam.org/lifegamebot/" + file_name
-#print %Q{<span style="color:white"}
-#ret = suzuri( img_address, gene, step, color, "t_shirt")
-#print %Q{</span>}
-#p ret
-#if(ret[0] == "3" || ret[0] == "4" || ret[0] == "5")
-#  print "</br>生成に失敗しました。さようなら。</br>\n"
-#  print %Q{<script type="text/javascript">\n}
-#  print %Q{<!-- \nwindow.open('about:_blank','_self').close()\n -->\n}
-#  print %Q{</script>\n}
-#else
-#  print %Q{<script type="text/javascript">\n}
-#  print %Q{<!-- \nwindow.location.href='#{ret}'\n -->\n}
-#  print %Q{</script>\n}
-#end
+img_address = "http://www.wetsteam.org/lifegamebot/" + file_name
+print %Q{<span style="color:white"}
+ret = suzuri( img_address, gene, step, color, "t_shirt")
+print %Q{</span>}
+p ret
+if(ret[0] == "3" || ret[0] == "4" || ret[0] == "5")
+  print "</br>生成に失敗しました。さようなら。</br>\n"
+  print %Q{<script type="text/javascript">\n}
+  print %Q{<!-- \nwindow.open('about:_blank','_self').close()\n -->\n}
+  print %Q{</script>\n}
+else
+  print %Q{<script type="text/javascript">\n}
+  print %Q{<!-- \nwindow.location.href='#{ret}'\n -->\n}
+  print %Q{</script>\n}
+end
 print "</body></html>\n"
-#send to suzuri
-
-
 
