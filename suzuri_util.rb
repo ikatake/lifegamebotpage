@@ -32,7 +32,7 @@ def suzuri(img_path, gene, step, color, material)
       }]'
     elsif(color == "black")
       products = '[{
-        "itemId": 11, "published": true, "resizeMode": "contain", "exemplaryItemVariantId": 152
+        "itemId": 1, "published": true, "resizeMode": "contain", "exemplaryItemVariantId": 152
       }]'
     end
   end
