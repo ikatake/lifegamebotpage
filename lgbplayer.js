@@ -49,10 +49,15 @@ function wear_pb(color) {
 	shirtColor = color;
 	var gene = parseInt(getValue('gene'));
 	var step = parseInt(getValue('step'));
+	var add = "t_shirt.rb?gene=" + gene;
+	add = add + "&step=" + step + "&color=" + color;
+	window.open(add, "t_shirt.rb");
+/*
 	req = new XMLHttpRequest();
 	req.onreadystatechange = readDataWear;
 	req.open("get", pathCgi+"?call=jump&gene="+gene+"&step="+step, true);
 	req.send("");
+*/
 }
 function sticker_pb(color) {
 	var gene = parseInt(getValue('gene'));
