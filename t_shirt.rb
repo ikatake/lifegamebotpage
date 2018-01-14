@@ -95,18 +95,18 @@ y_bottom_text1 = y_cells + cell_field_size + space_bottom_text
 y_bottom_text2 = y_bottom_text1 + height_text
 #set image width
 str_top = '@_lifegamebot'
-str_bottom1 = "step:#{step}"
-str_bottom2 = "gene:#{gene}"
+str_bottom1 = "gene:#{gene}"
+str_bottom2 = "step:#{step}"
 str_length = [str_top.length, str_bottom1.length, str_bottom2.length].max
 str_width = width_char * str_length + margin_right
 img_width = [(margin_left + cell_field_size + margin_right), str_width].max 
 img_height = y_bottom_text2 + height_text + margin_btm
 
 if(color == "white")
-  color_bg = "#ffffff"
+  color_bg = "transparent"
   color_front = "#000000"
 elsif(color == "black")
-  color_bg = "#000000"
+  color_bg = "transparent"
   color_front = "#00ff00"
 end
 font = './font/mplus-2m-bold.ttf'
