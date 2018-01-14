@@ -119,7 +119,7 @@ png.save(file_name)
 
 img_address = "http://www.wetsteam.org/lifegamebot/" + file_name
 print %Q{<span style="color:white"}
-ret = suzuri( img_address, gene, step, "sticker")
+ret = suzuri( img_address, gene, step, color, "sticker")
 print %Q{</span>}
 p ret
 if(ret[0] == "3" || ret[0] == "4" || ret[0] == "5")

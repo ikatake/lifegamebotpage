@@ -4,7 +4,7 @@ require 'json';
 require 'faraday'
 
 
-def suzuri(img_path, gene, step, material)
+def suzuri(img_path, gene, step, color, material)
   conn = Faraday::Connection.new(:url => 'https://suzuri.jp/', :ssl => {:verify => false}) do |builder|
     builder.use Faraday::Request::UrlEncoded
     builder.use Faraday::Response::Logger
@@ -14,7 +14,7 @@ def suzuri(img_path, gene, step, material)
   key = '3df61022350585b2e5a2890ef9cdd2201ef5897c50f655cd618fe90b8bac3c76'
   title = '"@_lifegamebot g:' + gene.to_s + ' s:' + step.to_s + '"'
   description = '"@_lifegamebot g:' + gene.to_s + ' s:' + step.to_s +
-    ' ' + material + '"'
+    ' ' + material + '(' + color + ')"'
   texture = '"' + img_path + '"'
 
   if(material == "sticker")
@@ -25,6 +25,16 @@ def suzuri(img_path, gene, step, material)
     products = '[{
       "itemId": 17, "published": true, "resizeMode": "contain", "exemplaryItemVariantId": 848
     }]'
+  elsif(material == "t_shirt")
+    if(color == "white")
+      products = '[{
+        "itemId": 1, "published": true, "resizeMode": "contain", "exemplaryItemVariantId": 151
+      }]'
+    elsif(color == "black")
+      products = '[{
+        "itemId": 11, "published": true, "resizeMode": "contain", "exemplaryItemVariantId": 152
+      }]'
+    end
   end
 
   response = conn.post do |request|
