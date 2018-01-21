@@ -71,3 +71,16 @@ def annotate_on_arc(img, str, wc, r, x0, y0, theta0, font, fill, stroke, size)
     ii += 1;
   end
 end
+
+def annotate(img, str, w, h, x, y, font, fill, stroke, size)
+  draw = Magick::Draw.new  
+  str = str.gsub(/^@/, '\@')
+  draw.annotate(img, w, h, x, y, str) do
+    self.font = font
+    self.fill = fill
+    self.stroke = 'transparent'
+    self.pointsize = size
+    self.gravity = Magick::NorthWestGravity
+  end
+end
+
