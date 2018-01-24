@@ -47,10 +47,14 @@ def cgi_input(cgi)
     step = (step < cgi['step'].to_i) ? step : cgi['step'].to_i
   end
   state = get_state_text(gene, step)
-	p gene
-	p step
-	p is_valid_gene_step?(gene, step) 
-	p state
+	puts gene
+	puts '<br>'
+	puts step
+	puts '<br>'
+	puts is_valid_gene_step?(gene, step) 
+	puts '<br>'
+	puts state
+	puts '<br>'
   arr = [gene, step, state, color]
 
 end
