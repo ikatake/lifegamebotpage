@@ -4,68 +4,19 @@
 #Tシャツ作成用cgi
 
 require_relative './suzuri_util.rb'
-require_relative './lgb_util.rb'
+require_relative './product_common.rb'
 require_relative './draw_rmagick.rb'
 require 'rmagick'
 require 'cgi'
 require 'date'
 include Math
 
-def annotate(img, str, w, h, x, y, font, fill, stroke, size)
-  draw = Magick::Draw.new  
-  str = str.gsub(/^@/, '\@')
-  draw.annotate(img, w, h, x, y, str) do
-    self.font = font
-    self.fill = fill
-    self.stroke = 'transparent'
-    self.pointsize = size
-    self.gravity = Magick::NorthWestGravity
-  end
-end
-
-print "Content-Type: text/html\n\n"
-print "<html><head><title>nyan</title></head><body>\n"
 cgi = CGI.new
-text = CGI.escapeHTML cgi["t"]
-print text
-print "<br>"
-
-if (cgi.has_key?('color')  == false) 
-  print "invalid parameters.(need 'color')."
-  print "</body></html>\n"
-  exit 0
-end
-if (cgi.has_key?('gene') ^ cgi.has_key?('step'))
-  print "invalud parameters.(need both 'gene' and 'step')"
-  print "</body></html>\n"
-  exit 0
-end
-
-#read argument (color)
-if(cgi['color'] == "black")
-  color = "black"
-else
-  color = "white"
-end
-
-#read argument (gene and step)
-if (cgi.has_key?('gene') && cgi.has_key?('step'))
-  gene = cgi['gene'].to_i
-  step = cgi['step'].to_i
-	p gene
-	p step
-  if( is_valid_gene_step?(gene, step) == false)
-    print "invalid gene or step."
-    print "</body></html>\n"
-    exit 0
-  end
-  state = get_state_text(gene, step)
-else #nothing gene & step => get lastst state
-  state = get_lastest_state_text
-  arr = get_lastest_gene_step
-  gene = arr[0]
-  step = arr[1]
-end
+arr = cgi_input(cgi)
+gene = arr[0]
+step = arr[1]
+state = arr[2]
+color = arr[3]
 
 #make iamge file
 file_name = "t_shirt_img/" + gene.to_s + "_" + step.to_s + "_"
