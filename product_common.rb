@@ -8,6 +8,18 @@ require 'cgi'
 require 'date'
 include Math
 
+def cgi_input_wear(cgi, material)
+  if (cgi.has_key?('material') == false)
+    if(Random.rand(2) >= 1)
+      material = "t_shirt"
+    else
+      material = "hoodie"
+    end
+  end
+  arr = cgi_input(cgi)
+  arr.push(material)
+end
+
 def cgi_input(cgi)
   print "Content-Type: text/html\n\n"
   print "<html><head><title>Now making...Please wait.</title></head><body>\n"
