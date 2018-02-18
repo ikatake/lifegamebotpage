@@ -77,7 +77,7 @@ if (material == "sticker")
   draw_sticker(file_name, gene, step, color, state)
 elsif (material == "can_badge")
   draw_can_badge(file_name, gene, step, color, state)
-else
+elsif (material == "t_shirt" || material == "hoodie")
   draw_wear(file_name, gene, step, color, state)
 end
 

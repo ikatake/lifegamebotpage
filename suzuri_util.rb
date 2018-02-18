@@ -35,6 +35,16 @@ def suzuri(img_path, gene, step, color, material)
         "itemId": 1, "published": true, "resizeMode": "contain", "exemplaryItemVariantId": 152
       }]'
     end
+  elsif(material == "hoodie")
+    if(color == "white")
+      products = '[{
+        "itemId": 9, "published": true, "resizeMode": "contain", "exemplaryItemVariantId": 499
+      }]'
+    elsif(color == "black")
+      products = '[{
+        "itemId": 9, "published": true, "resizeMode": "contain", "exemplaryItemVariantId":501
+      }]'
+    end
   end
 
   response = conn.post do |request|
