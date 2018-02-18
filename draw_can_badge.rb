@@ -7,7 +7,7 @@ require_relative './draw_rmagick.rb'
 require 'rmagick'
 include Math
 
-def draw_can_badge(file_name, gene, step, color)
+def draw_can_badge(file_name, gene, step, color, state)
   #set image file size
   img_size = 992   #img canvas size[px] (both width and height)
   field_size = 420 #

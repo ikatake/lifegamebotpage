@@ -65,21 +65,21 @@ if (cgi.has_key?("step"))
   step = (step < cgi["step"].to_i) ? step : cgi["step"].to_i
 end
 state = get_state_text(gene, step)
-	puts gene + '<br>' + step + '<br>'
-	puts is_valid_gene_step?(gene, step)  + '<br>'
-	puts state + '<br>'
-file_name = "img/" + material + gene.to_s + "_" + step.to_s + "_"
+	puts "#{gene}<br>#{step}<br>"
+	puts "#{is_valid_gene_step?(gene, step)}<br>"
+	puts "#{state}<br>"
+file_name = "product_img/" + material + "_" + gene.to_s + "_" + step.to_s + "_"
 file_name += Time.now.to_i.to_s + ".png"
 	p file_name
 img_address = "http://www.wetsteam.org/lifegamebot/" + file_name
 hs = {"gene" => gene, "step" => step, "state" => state,
   "color" => color, "material" => material}
 if (material == "sticker")
-  draw_sticker(file_name, gene, step, color)
+  draw_sticker(file_name, gene, step, color, state)
 elsif (material == "can_badge")
-  draw_can_badge(file_name, gene, step, color)
+  draw_can_badge(file_name, gene, step, color, state)
 else
-  draw_t_wear(file_name, gene, step, color)
+  draw_wear(file_name, gene, step, color, state)
 end
 
 ret = suzuri( img_address, gene, step, color, material)

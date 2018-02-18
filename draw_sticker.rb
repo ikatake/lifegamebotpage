@@ -6,7 +6,7 @@
 
 require 'chunky_png'
 
-def draw_sticker(file_name, gene, step, color)
+def draw_sticker(file_name, gene, step, color, state)
   width = 630
   height = 630
   if(color == "white")#fill bg clear(white)

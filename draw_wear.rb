@@ -7,7 +7,7 @@ require_relative './draw_rmagick.rb'
 require 'rmagick'
 require 'cgi'
 
-def draw_wear(file_name, gene, step, color)
+def draw_wear(file_name, gene, step, color, state)
   #set image file size
   cell_size = 100
   margin_top = 100
@@ -55,4 +55,6 @@ def draw_wear(file_name, gene, step, color)
     margin_left, y_bottom_text1, font, color_front, 'transparent', font_size)
   annotate(img, str_bottom2, width_char * str_bottom2.length, height_text,
     margin_left, y_bottom_text2, font, color_front, 'transparent', font_size)
+  
+  img.write(file_name)
 end
