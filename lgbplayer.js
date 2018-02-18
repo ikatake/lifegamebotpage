@@ -49,7 +49,7 @@ function wear_pb(color) {
 	shirtColor = color;
 	var gene = parseInt(getValue('gene'));
 	var step = parseInt(getValue('step'));
-	var add = "t_shirt.rb?gene=" + gene;
+	var add = "product.rb?material=t_shirt&gene=" + gene;
 	add = add + "&step=" + step + "&color=" + color;
 	window.open(add, "t_shirt.rb");
 /*
@@ -62,14 +62,14 @@ function wear_pb(color) {
 function sticker_pb(color) {
 	var gene = parseInt(getValue('gene'));
 	var step = parseInt(getValue('step'));
-	var add = "sticker.rb?gene=" + gene;
+	var add = "product.rb?material=sticker&gene=" + gene;
 	add = add + "&step=" + step + "&color=" + color;
 	window.open(add, "sticker.rb");
 }
 function can_badge_pb(color) {
 	var gene = parseInt(getValue('gene'));
 	var step = parseInt(getValue('step'));
-	var add = "can_badge.rb?gene=" + gene;
+	var add = "product.rb?material=can_badge&gene=" + gene;
 	add = add + "&step=" + step + "&color=" + color;
 	window.open(add, "can_badge.rb");
 }
