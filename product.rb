@@ -57,15 +57,14 @@ step = arr[1]
 if (cgi.has_key?("gene"))
   #min(gene, gene_input) 
   gene = (gene < cgi["gene"].to_i) ? gene : cgi["gene"].to_i
-  step = measure_gene(gene) 
-  step = (step < cgi["step"].to_i) ? step : cgi["step"].to_i
+  step = measure_gene(gene) - 1
 end
 if (cgi.has_key?("step"))
   #min(step, step_input)
   step = (step < cgi["step"].to_i) ? step : cgi["step"].to_i
 end
 state = get_state_text(gene, step)
-	puts "#{gene}<br>#{step}<br>"
+	puts "#{material}<br>#{gene}<br>#{step}<br>#{color}<br>"
 	puts "#{is_valid_gene_step?(gene, step)}<br>"
 	puts "#{state}<br>"
 file_name = "product_img/" + material + "_" + gene.to_s + "_" + step.to_s + "_"
@@ -82,6 +81,7 @@ else
   draw_wear(file_name, gene, step, color, state)
 end
 
+print %Q{<span style="color:white"}
 ret = suzuri( img_address, gene, step, color, material)
 print %Q{</span>}
 p ret
