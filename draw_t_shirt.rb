@@ -43,7 +43,7 @@ def draw_t_shirt(file_name, gene, step, color, state)
     color_front = "#000000"
   elsif(color == "black")
     color_bg = "transparent"
-    color_front = "#00ff00"
+    color_front = "#ffffff"
   end
   font = './font/mplus-2m-bold.ttf'
   img = Magick::Image.new(img_width, img_height){self.background_color=color_bg}
