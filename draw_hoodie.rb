@@ -55,6 +55,5 @@ def draw_hoodie(file_name, gene, step, color, state)
     margin_left, y_bottom_text1, font, color_front, 'transparent', font_size)
   annotate(img, str_bottom2, width_char * str_bottom2.length, height_text,
     margin_left, y_bottom_text2, font, color_front, 'transparent', font_size)
-	p 'hoodie'
   img.write(file_name)
 end
