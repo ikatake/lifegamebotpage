@@ -1,7 +1,7 @@
 #!/usr/bin/env /home/ikatake/local/rbenv/shims/ruby
 ###!/bin/usr/local/ruby
 
-#服描画用
+#パーカー描画用
 
 require_relative './draw_rmagick.rb'
 require 'rmagick'
@@ -9,19 +9,19 @@ require 'cgi'
 
 def draw_hoodie(file_name, gene, step, color, state)
   #set image file size
-  cell_size = 100
-  margin_top = 100
-  margin_btm = 150
-  space_top_text = 100
-  space_bottom_text = -50
+  cell_size = 80
+  margin_top = 0
+  margin_btm = 600
+  space_top_text = 70
+  space_bottom_text = -40
   cell_margin = 20
-  margin_left = 100
+  margin_left = 300
   margin_right = 100
   width_char = 110
   line_width = 10
-  height_text = 180
+  height_text = 140
   num_cells = 10 
-  font_size = 200 #文字サイズ。tuning要素
+  font_size = 150 #文字サイズ。tuning要素
 
   #set position of top text, cell_field and bottom texts
   y_top_text = margin_top
@@ -55,6 +55,6 @@ def draw_hoodie(file_name, gene, step, color, state)
     margin_left, y_bottom_text1, font, color_front, 'transparent', font_size)
   annotate(img, str_bottom2, width_char * str_bottom2.length, height_text,
     margin_left, y_bottom_text2, font, color_front, 'transparent', font_size)
-  
+	p 'hoodie'
   img.write(file_name)
 end
