@@ -6,7 +6,8 @@
 require_relative './lgb_util.rb'
 require_relative './suzuri_util.rb'
 require_relative './draw_can_badge.rb'
-require_relative './draw_wear.rb'
+require_relative './draw_t_shirt.rb'
+require_relative './draw_hoodie.rb'
 require_relative './draw_sticker.rb'
 require 'cgi'
 require 'date'
@@ -77,8 +78,10 @@ if (material == "sticker")
   draw_sticker(file_name, gene, step, color, state)
 elsif (material == "can_badge")
   draw_can_badge(file_name, gene, step, color, state)
-elsif (material == "t_shirt" || material == "hoodie")
-  draw_wear(file_name, gene, step, color, state)
+elsif (material == "t_shirt")
+  draw_t_shirt(file_name, gene, step, color, state)
+elsif ( material == "hoodie")
+  draw_hoodie(file_name, gene, step, color, state)
 end
 
 print %Q{<span style="color:white"}

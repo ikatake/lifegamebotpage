@@ -7,7 +7,7 @@ require_relative './draw_rmagick.rb'
 require 'rmagick'
 require 'cgi'
 
-def draw_wear(file_name, gene, step, color, state)
+def draw_t_shirt(file_name, gene, step, color, state)
   #set image file size
   cell_size = 100
   margin_top = 100
