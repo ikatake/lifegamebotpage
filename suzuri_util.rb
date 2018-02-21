@@ -44,6 +44,10 @@ def suzuri(img_path, gene, step, color, material)
       products = '[{
         "itemId": 9, "published": true, "resizeMode": "contain", "exemplaryItemVariantId":501
       }]'
+  elsif(material == "towl-handkerchief")
+    products = '[{
+      "itemId": 14, "published": true, "resizeMode": "contain", "exemplaryItemVariantId": 612
+    }]'
     end
   end
 

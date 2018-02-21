@@ -26,7 +26,7 @@ hs = Hash.new
 if (cgi.has_key?("material") == false)
   r = Random.rand(4)
   if(r >= 5)
-    material = "handkaerchief"
+    material = "handkerchief"
   elsif(r >= 4)
     material = "hoodie"
   elsif(r >= 3)
@@ -82,6 +82,8 @@ elsif (material == "t_shirt")
   draw_t_shirt(file_name, gene, step, color, state)
 elsif ( material == "hoodie")
   draw_hoodie(file_name, gene, step, color, state)
+elsif (material = "handkerchief")
+  draw_handkerchief(file_name, gene, step, color, state)
 end
 
 print %Q{<span style="color:white"}
