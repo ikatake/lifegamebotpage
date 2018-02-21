@@ -9,6 +9,7 @@ require_relative './draw_can_badge.rb'
 require_relative './draw_t_shirt.rb'
 require_relative './draw_hoodie.rb'
 require_relative './draw_sticker.rb'
+require_relative './draw_handkerchief.rb'
 require 'cgi'
 require 'date'
 include Math
@@ -82,7 +83,7 @@ elsif (material == "t_shirt")
   draw_t_shirt(file_name, gene, step, color, state)
 elsif ( material == "hoodie")
   draw_hoodie(file_name, gene, step, color, state)
-elsif (material = "handkerchief")
+elsif (material == "handkerchief")
   draw_handkerchief(file_name, gene, step, color, state)
 end
 
