@@ -7,13 +7,14 @@ body
 
 div#lgbp_middleman {
     display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     height: auto;
     padding: 0;
 }
 
 div#lgbp_counter, div#lgbp_image, div#lgbp_APIbutton {
     float: none;
-    justify-content: space-around;
 }
 
 div#lgbp_APIbutton ul {
@@ -26,4 +27,5 @@ div#lgbp_APIbutton ul {
 div#lgbp_APIbutton ul li {
     float: none;
 }
+
 
