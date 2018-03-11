@@ -1,0 +1,31 @@
+@charset "utf-8";
+
+body
+{
+    
+}
+
+div#lgbp_middleman {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: auto;
+    padding: 0;
+}
+
+div#lgbp_counter, div#lgbp_image, div#lgbp_APIbutton {
+    float: none;
+}
+
+div#lgbp_APIbutton ul {
+    display: flex;
+    flex-wrap: wrap;
+    
+    overflow: visible;
+}
+
+div#lgbp_APIbutton ul li {
+    float: none;
+}
+
+
