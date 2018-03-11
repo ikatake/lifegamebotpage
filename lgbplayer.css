@@ -55,13 +55,6 @@ div#lgbp_counter ul li input#jump {
 	text-align: center;
 }
 
-div#lgbp_image {
-	float:left;
-	
-	width: 150px;
-	padding: 20px 25px 0 25px;
-}
-
 div#lgbp_image img {
 	display:block;
 	width:100px;
