@@ -87,6 +87,10 @@ div#lgbp_controlbutton ul {
     border: 3px solid #2E8B57;
     border-radius: 5px;
     padding: 5px;
+    display: block;
+    width: 270px;
+    margin:0 auto;
+    overflow: hidden;
 }
 
 div#lgbp_APIbutton ul li:nth-child(odd){
