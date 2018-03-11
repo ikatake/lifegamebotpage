@@ -1,10 +1,5 @@
 @charset "utf-8";
 
-div#lgbplayer {
-	width: 100%;
-	margin: 40px auto;
-}
-
 h2#LifeGameBotPlayer {
 	background-color: #000000;
 	color: #2E8B57; /* SEAGREEN */
