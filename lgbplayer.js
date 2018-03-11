@@ -45,7 +45,7 @@ function proc_onload_measure() {
 	req.open("get", pathCgi+"?call=measure", true);
 	req.send("");
 }
-function wear_pb(color) {
+function t_shirt_pb(color) {
 	shirtColor = color;
 	var gene = parseInt(getValue('gene'));
 	var step = parseInt(getValue('step'));
@@ -72,6 +72,20 @@ function can_badge_pb(color) {
 	var add = "product.rb?material=can_badge&gene=" + gene;
 	add = add + "&step=" + step + "&color=" + color;
 	window.open(add, "can_badge.rb");
+}
+function handkerchief_pb(color) {
+	var gene = parseInt(getValue('gene'));
+	var step = parseInt(getValue('step'));
+	var add = "product.rb?material=handkerchief&gene=" + gene;
+	add = add + "&step=" + step + "&color=" + color;
+	window.open(add, "handkerchief.rb");
+}
+function hoodie_pb(color) {
+	var gene = parseInt(getValue('gene'));
+	var step = parseInt(getValue('step'));
+	var add = "product.rb?material=hoodie&gene=" + gene;
+	add = add + "&step=" + step + "&color=" + color;
+	window.open(add, "hoodie.rb");
 }
 function jump() {
 	var gene = parseInt(getValue('gene'));
