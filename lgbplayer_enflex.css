@@ -10,7 +10,6 @@ div#lgbp_middleman {
     justify-content: center;
     flex-wrap: wrap;
     height: auto;
-    padding: 0;
 }
 
 div#lgbp_counter, div#lgbp_image, div#lgbp_APIbutton {

@@ -20,13 +20,6 @@ h2#LifeGameBotPlayer {
 	margin:20px 0 0 0;
 }
 
-div#lgbp_middleman {
-	padding:0 0 20px 0;
-	width: 800px;
-	height: 100px;
-	min-height: 100px;
-}
-
 div#lgbp_counter {
 	float:left;
 	
