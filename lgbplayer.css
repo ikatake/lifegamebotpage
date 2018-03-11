@@ -100,16 +100,6 @@ div#lgbp_APIbutton ul li a {
 
 }
 
-div#lgbp_controlbutton {
-	clear:both;
-	
-	background-color:#000000;
-	color: #ffffff;
-	
-	width: 720px;
-	padding: 5px 40px;
-}
-
 div#lgbp_controlbutton ul {
 	display: block;
 	width: 270px;

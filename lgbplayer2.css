@@ -78,7 +78,9 @@ h2#LifeGameBotPlayer {
 div#lgbp_controlbutton {
     padding: 5px;
     width: auto;
+    color: #ffffff;
     background-color: #FFFFFF;
+    clear:both;
 }
 
 div#lgbp_controlbutton ul {
