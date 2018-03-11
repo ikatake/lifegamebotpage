@@ -59,14 +59,19 @@ h2#LifeGameBotPlayer {
     padding:15px 30px 15px 0;
     color: #2E8B57;
     font-size: 20px;
+    font-family: 'Impact', serif;
+    font-weight: lighter;
     background-color: #FFFFFF;
     border-top: 3px solid #2E8B57;
     border-right: 3px solid #2E8B57;
     border-bottom: 3px solid #2E8B57;
     border-left: none;
-    letter-spacing: 3px;
     border-radius: 0 5px 5px 0;
+    letter-spacing: 3px;
     margin-top: 50px;
+    text-align:center;
+    line-height:18px;
+    margin:20px 0 0 0;
 }
 
 div#lgbp_controlbutton {
