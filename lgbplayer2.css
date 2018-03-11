@@ -40,6 +40,8 @@ div#lgbp_middleman {
 
 div#lgbp_counter {
     width: 300px;
+    padding-left:50px;
+    padding-top:20px;
 }
 
 div#lgbp_image {

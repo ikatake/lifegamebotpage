@@ -1,12 +1,5 @@
 @charset "utf-8";
 
-div#lgbp_counter {
-	float:left;
-	
-	width: 250px;
-	padding-left:50px;
-	padding-top:20px;
-}
 
 div#lgbp_counter ul {
 	overflow:hidden;
