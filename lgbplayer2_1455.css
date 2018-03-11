@@ -32,26 +32,23 @@ div#lgbplayer {
 }
 
 div#lgbp_middleman {
-    margin-top: 20px;
+    margin-top: 50px;
     width: 100%;
     padding: 0;
-    min-height: 100px;
 }
 
 div#lgbp_counter {
-    width: 280px;
-    padding-left:10px;
-    padding-top:45px;
+    width: 300px;
 }
 
 div#lgbp_image {
-    width: 100px;
-    height: 100px;
-    padding: 50px 15px 0 0;
+    width: 150px;
+    height: 150px;
+    padding: 24px;
 }
 
 div#lgbp_APIbutton {
-    width: 280px;
+    width: 450px;
     padding: 0;
 }
 
@@ -61,36 +58,26 @@ h2#LifeGameBotPlayer {
     padding:15px 30px 15px 0;
     color: #2E8B57;
     font-size: 20px;
-    font-family: 'Impact', serif;
-    font-weight: lighter;
     background-color: #FFFFFF;
     border-top: 3px solid #2E8B57;
     border-right: 3px solid #2E8B57;
     border-bottom: 3px solid #2E8B57;
     border-left: none;
-    border-radius: 0 5px 5px 0;
     letter-spacing: 3px;
-    text-align:center;
-    line-height:18px;
-    margin:50px 0 0 0;
+    border-radius: 0 5px 5px 0;
+    margin-top: 50px;
 }
 
 div#lgbp_controlbutton {
     padding: 5px;
     width: auto;
-    color: #ffffff;
     background-color: #FFFFFF;
-    clear:both;
 }
 
 div#lgbp_controlbutton ul {
     border: 3px solid #2E8B57;
     border-radius: 5px;
     padding: 5px;
-    display: block;
-    width: 270px;
-    margin:0 auto;
-    overflow: hidden;
 }
 
 div#lgbp_APIbutton ul li:nth-child(odd){

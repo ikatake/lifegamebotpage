@@ -39,19 +39,19 @@ div#lgbp_middleman {
 }
 
 div#lgbp_counter {
-    width: 280px;
+    width: 240px;
     padding-left:10px;
-    padding-top:45px;
+    padding-top:10px;
 }
 
 div#lgbp_image {
     width: 100px;
     height: 100px;
-    padding: 50px 15px 0 0;
+    padding: 20px 20px 0 10px;
 }
 
 div#lgbp_APIbutton {
-    width: 280px;
+    width: 420px;
     padding: 0;
 }
 
