@@ -3,7 +3,7 @@
 require 'json';
 require 'faraday'
 
-conn = Faraday::Connection.new(:url => 'https://suzuri.jp/', :ssl => {:verify => false}) do |builder|
+conn = Faraday::Connection.new(:url => 'https://suzuri.jp/', :ssl => {:ca_file => "cacert.pem"}) do |builder|
   builder.use Faraday::Request::UrlEncoded
   builder.use Faraday::Response::Logger
   builder.use Faraday::Adapter::NetHttp
