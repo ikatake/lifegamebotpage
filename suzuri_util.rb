@@ -5,7 +5,7 @@ require 'faraday'
 
 
 def suzuri(img_path, gene, step, color, material)
-  conn = Faraday::Connection.new(:url => 'https://suzuri.jp/', :ssl => {:verify => false}) do |builder|
+  conn = Faraday::Connection.new(:url => 'https://suzuri.jp/', :ssl => {:version => "SSLv23"}) do |builder|
     builder.use Faraday::Request::UrlEncoded
     builder.use Faraday::Response::Logger
     builder.use Faraday::Adapter::NetHttp
